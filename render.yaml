@@ -4,7 +4,7 @@ services:
     runtime: python
     plan: free
 
-    buildCommand: ./build.sh
+    buildCommand: bash build.sh
 
     startCommand: python -m gunicorn agricontract_project.wsgi:application
 
@@ -15,14 +15,5 @@ services:
       - key: DEBUG
         value: "False"
 
-      - key: DATABASE_URL
-        fromDatabase:
-          name: agricontract-db
-          property: connectionString
-
       - key: PYTHON_VERSION
-        value: 3.11.9
-
-databases:
-  - name: agricontract-db
-    plan: free
+        value: "3.11.9"
