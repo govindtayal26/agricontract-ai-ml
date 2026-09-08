@@ -1,0 +1,17 @@
+venv/
+__pycache__/
+*.pyc
+.env
+
+db.sqlite3
+
+media/
+staticfiles/
+
+*.h5
+*.keras
+
+.ipynb_checkpoints/
+
+.vscode/
+.idea/

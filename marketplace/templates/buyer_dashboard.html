@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Buyer Dashboard | AgriContract</title>
+
+    <style>
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f4f7f5;
+            color: #263238;
+            min-height: 100vh;
+        }
+
+        button,
+        input,
+        a {
+            font-family: inherit;
+        }
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            background: #1b5e20;
+            color: white;
+
+            padding: 16px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .welcome {
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+
+            background: white;
+            color: #1b5e20;
+
+            padding: 9px 16px;
+
+            border-radius: 7px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: #e8f5e9;
+            transform: translateY(-1px);
+        }
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+
+            margin: 30px auto;
+
+            padding-bottom: 30px;
+        }
+
+        .page-title {
+            margin-bottom: 30px;
+        }
+
+        .page-title h1 {
+            color: #1b5e20;
+            margin-bottom: 7px;
+            font-size: 32px;
+        }
+
+        .page-title p {
+            color: #607d68;
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           STAT CARDS
+        ===================================================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+
+            transition: 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-card h4 {
+            font-size: 13px;
+
+            color: #78909c;
+
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+
+            font-weight: 700;
+
+            color: #1b5e20;
+        }
+
+        /* =====================================================
+           SECTION CARD
+        ===================================================== */
+
+        .card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            margin-bottom: 30px;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+
+            min-width: 0;
+        }
+
+        .card-header {
+            margin-bottom: 20px;
+        }
+
+        .card-header h2 {
+            font-size: 21px;
+            color: #263238;
+        }
+
+        .card-header p {
+            margin-top: 5px;
+
+            color: #78909c;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           CROP GRID
+        ===================================================== */
+
+        .crop-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+
+            gap: 20px;
+        }
+
+        .crop-card {
+            border: 1px solid #e0e0e0;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            background: white;
+
+            transition: 0.2s;
+
+            min-width: 0;
+        }
+
+        .crop-card:hover {
+            transform: translateY(-3px);
+
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .crop-image {
+            width: 100%;
+
+            height: 180px;
+
+            object-fit: cover;
+
+            background: #e8f5e9;
+
+            display: block;
+        }
+
+        .no-image {
+            height: 180px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: 50px;
+
+            background: #e8f5e9;
+        }
+
+        .crop-content {
+            padding: 18px;
+        }
+
+        .crop-name {
+            font-size: 20px;
+
+            font-weight: 700;
+
+            color: #1b5e20;
+
+            margin-bottom: 10px;
+
+            word-break: break-word;
+        }
+
+        .crop-info {
+            margin-bottom: 6px;
+
+            font-size: 14px;
+
+            color: #546e7a;
+
+            line-height: 1.5;
+
+            overflow-wrap: anywhere;
+        }
+
+        .crop-price {
+            margin-top: 12px;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            color: #263238;
+        }
+
+        /* =====================================================
+           OFFER FORM
+        ===================================================== */
+
+        .offer-form {
+            margin-top: 15px;
+
+            padding-top: 15px;
+
+            border-top: 1px solid #eeeeee;
+        }
+
+        .offer-form label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            margin-bottom: 6px;
+
+            color: #455a64;
+        }
+
+        .offer-input {
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border: 1px solid #cfd8dc;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            margin-bottom: 10px;
+
+            min-height: 42px;
+
+            background: white;
+        }
+
+        .offer-input:focus {
+            outline: none;
+
+            border-color: #2e7d32;
+
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.10);
+        }
+
+        .offer-btn {
+            width: 100%;
+
+            padding: 11px;
+
+            min-height: 42px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #2e7d32;
+
+            color: white;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .offer-btn:hover {
+            background: #1b5e20;
+        }
+
+        .offer-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* =====================================================
+           OFFERS TABLE
+        ===================================================== */
+
+        .table-container {
+            width: 100%;
+
+            overflow-x: auto;
+
+            -webkit-overflow-scrolling: touch;
+
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+
+            min-width: 760px;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            padding: 14px;
+
+            text-align: left;
+
+            background: #f1f8f2;
+
+            color: #455a64;
+
+            font-size: 14px;
+
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px;
+
+            border-bottom: 1px solid #eeeeee;
+
+            font-size: 14px;
+
+            vertical-align: middle;
+        }
+
+        tbody tr {
+            transition: 0.15s;
+        }
+
+        tbody tr:hover {
+            background: #fafafa;
+        }
+
+        td strong {
+            color: #263238;
+        }
+
+        td small {
+            color: #78909c;
+        }
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .badge {
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        .pending {
+            background: #fff3cd;
+
+            color: #856404;
+        }
+
+        .accepted {
+            background: #d4edda;
+
+            color: #155724;
+        }
+
+        .rejected {
+            background: #f8d7da;
+
+            color: #721c24;
+        }
+
+        /* =====================================================
+           CHAT
+        ===================================================== */
+
+        .chat-btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 8px 12px;
+
+            background: #1976d2;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            transition: 0.2s;
+        }
+
+        .chat-btn:hover {
+            background: #0d47a1;
+        }
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty {
+            text-align: center;
+
+            padding: 40px;
+
+            color: #78909c;
+
+            line-height: 1.6;
+        }
+
+        .empty-icon {
+            font-size: 45px;
+
+            margin-bottom: 10px;
+        }
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .navbar {
+                padding: 15px 25px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .crop-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+
+            .stat-card {
+                padding: 18px;
+            }
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            body {
+                font-size: 14px;
+            }
+
+            /* NAVBAR */
+
+            .navbar {
+                padding: 13px 16px;
+
+                min-height: 60px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .nav-right {
+                gap: 8px;
+            }
+
+            .welcome {
+                display: none;
+            }
+
+            .logout-btn {
+                padding: 8px 12px;
+
+                font-size: 13px;
+            }
+
+            /* MAIN */
+
+            .container {
+                width: calc(100% - 24px);
+
+                margin: 20px auto;
+            }
+
+            .page-title {
+                margin-bottom: 22px;
+            }
+
+            .page-title h1 {
+                font-size: 26px;
+
+                line-height: 1.25;
+            }
+
+            .page-title p {
+                font-size: 14px;
+            }
+
+            /* STATS */
+
+            .stats {
+                grid-template-columns: 1fr;
+
+                gap: 12px;
+
+                margin-bottom: 20px;
+            }
+
+            .stat-card {
+                padding: 17px;
+
+                display: flex;
+
+                justify-content: space-between;
+
+                align-items: center;
+            }
+
+            .stat-card h4 {
+                margin-bottom: 0;
+
+                font-size: 12px;
+            }
+
+            .stat-number {
+                font-size: 25px;
+            }
+
+            /* CARDS */
+
+            .card {
+                padding: 16px;
+
+                margin-bottom: 20px;
+
+                border-radius: 10px;
+            }
+
+            .card-header {
+                margin-bottom: 16px;
+            }
+
+            .card-header h2 {
+                font-size: 19px;
+            }
+
+            .card-header p {
+                font-size: 13px;
+            }
+
+            /* CROPS */
+
+            .crop-grid {
+                grid-template-columns: 1fr;
+
+                gap: 15px;
+            }
+
+            .crop-card:hover {
+                transform: none;
+            }
+
+            .crop-image,
+            .no-image {
+                height: 190px;
+            }
+
+            .crop-content {
+                padding: 16px;
+            }
+
+            .crop-name {
+                font-size: 19px;
+            }
+
+            /* OFFER */
+
+            .offer-form {
+                margin-top: 14px;
+
+                padding-top: 14px;
+            }
+
+            .offer-input,
+            .offer-btn {
+                min-height: 44px;
+            }
+
+            /* TABLE */
+
+            .table-container {
+                margin-left: -2px;
+
+                width: calc(100% + 4px);
+            }
+
+            table {
+                min-width: 700px;
+            }
+
+            th,
+            td {
+                padding: 11px 10px;
+
+                font-size: 13px;
+            }
+
+            /* EMPTY */
+
+            .empty {
+                padding: 30px 15px;
+            }
+
+            .empty-icon {
+                font-size: 38px;
+            }
+        }
+
+        /* =====================================================
+           SMALL PHONES
+        ===================================================== */
+
+        @media (max-width: 400px) {
+
+            .navbar {
+                padding: 12px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .logout-btn {
+                padding: 7px 10px;
+
+                font-size: 12px;
+            }
+
+            .container {
+                width: calc(100% - 18px);
+
+                margin-top: 16px;
+            }
+
+            .page-title h1 {
+                font-size: 23px;
+            }
+
+            .card {
+                padding: 13px;
+            }
+
+            .crop-content {
+                padding: 14px;
+            }
+
+            .crop-image,
+            .no-image {
+                height: 170px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-number {
+                font-size: 22px;
+            }
+        }
+
+        /* =====================================================
+           VERY SMALL DEVICES
+        ===================================================== */
+
+        @media (max-width: 320px) {
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .logout-btn {
+                padding: 6px 8px;
+            }
+
+            .page-title h1 {
+                font-size: 21px;
+            }
+
+            .card-header h2 {
+                font-size: 17px;
+            }
+
+            .crop-name {
+                font-size: 17px;
+            }
+        }
+
+        /* =====================================================
+           ACCESSIBILITY / TOUCH
+        ===================================================== */
+
+        @media (hover: none) {
+
+            .crop-card:hover,
+            .stat-card:hover,
+            .logout-btn:hover {
+                transform: none;
+            }
+        }
+
+        button,
+        a,
+        input {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🌾 AgriContract
+    </div>
+
+    <div class="nav-right">
+
+        <span class="welcome">
+            Welcome,
+            {{ request.user.first_name|default:request.user.username }}
+        </span>
+
+        <a
+            href="{% url 'logout' %}"
+            class="logout-btn"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<main class="container">
+
+
+    <!-- PAGE TITLE -->
+
+    <div class="page-title">
+
+        <h1>🛒 Buyer Dashboard</h1>
+
+        <p>
+            Browse agricultural products and make offers directly to farmers.
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         STATISTICS
+    ================================================== -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <h4>
+                AVAILABLE CROPS
+            </h4>
+
+            <div class="stat-number">
+                {{ crops|length }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h4>
+                MY OFFERS
+            </h4>
+
+            <div class="stat-number">
+                {{ contracts|length }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h4>
+                ACCEPTED OFFERS
+            </h4>
+
+            <div class="stat-number">
+                {{ accepted_count|default:"0" }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         AVAILABLE CROPS
+    ================================================== -->
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <h2>
+                🌾 Available Crops
+            </h2>
+
+            <p>
+                Choose a crop and send your offer to the farmer.
+            </p>
+
+        </div>
+
+
+        <div class="crop-grid">
+
+
+            {% for crop in crops %}
+
+            <div class="crop-card">
+
+
+                <!-- IMAGE -->
+
+                {% if crop.image %}
+
+                    <img
+                        src="{{ crop.image.url }}"
+                        alt="{{ crop.name }}"
+                        class="crop-image"
+                    >
+
+                {% else %}
+
+                    <div class="no-image">
+                        🌾
+                    </div>
+
+                {% endif %}
+
+
+                <!-- CONTENT -->
+
+                <div class="crop-content">
+
+                    <div class="crop-name">
+                        {{ crop.name }}
+                    </div>
+
+
+                    <div class="crop-info">
+
+                        <strong>
+                            Variety:
+                        </strong>
+
+                        {{ crop.variety }}
+
+                    </div>
+
+
+                    <div class="crop-info">
+
+                        <strong>
+                            Quantity:
+                        </strong>
+
+                        {{ crop.quantity }}
+
+                    </div>
+
+
+                    <div class="crop-info">
+
+                        <strong>
+                            Farmer:
+                        </strong>
+
+                        {{ crop.farmer.username }}
+
+                    </div>
+
+
+                    <div class="crop-price">
+                        ₹{{ crop.price }}
+                    </div>
+
+
+                    <!-- OFFER FORM -->
+
+                    <form
+                        method="POST"
+                        action="{% url 'send_offer' crop.id %}"
+                        class="offer-form"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <label>
+                            Your Offer Price
+                        </label>
+
+
+                        <input
+                            type="number"
+                            name="price"
+                            class="offer-input"
+                            placeholder="Enter your offer"
+                            min="1"
+                            step="0.01"
+                            required
+                        >
+
+
+                        <button
+                            type="submit"
+                            class="offer-btn"
+                        >
+                            🤝 Send Offer
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            {% empty %}
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🌱
+                </div>
+
+                <p>
+                    No crops are currently available.
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         MY OFFERS
+    ================================================== -->
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <h2>
+                🤝 My Offers
+            </h2>
+
+            <p>
+                Track the offers you have sent to farmers.
+            </p>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Crop
+                        </th>
+
+                        <th>
+                            Farmer
+                        </th>
+
+                        <th>
+                            Offer Price
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Chat
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {% for contract in contracts %}
+
+                    <tr>
+
+
+                        <!-- CROP -->
+
+                        <td>
+
+                            <strong>
+                                {{ contract.crop.name }}
+                            </strong>
+
+                            <br>
+
+                            <small>
+                                {{ contract.crop.variety }}
+                            </small>
+
+                        </td>
+
+
+                        <!-- FARMER -->
+
+                        <td>
+                            {{ contract.farmer.username }}
+                        </td>
+
+
+                        <!-- OFFER -->
+
+                        <td>
+
+                            <strong>
+                                ₹{{ contract.offered_price }}
+                            </strong>
+
+                        </td>
+
+
+                        <!-- DATE -->
+
+                        <td>
+                            {{ contract.created_at|date:"d M Y" }}
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            {% if contract.status == "pending" %}
+
+                                <span class="badge pending">
+                                    Pending
+                                </span>
+
+                            {% elif contract.status == "accepted" %}
+
+                                <span class="badge accepted">
+                                    Accepted
+                                </span>
+
+                            {% elif contract.status == "rejected" %}
+
+                                <span class="badge rejected">
+                                    Rejected
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- CHAT -->
+
+                        <td>
+
+                            <a
+                                href="{% url 'chat' contract.id %}"
+                                class="chat-btn"
+                            >
+                                💬 Chat
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            <div class="empty">
+
+                                <div class="empty-icon">
+                                    🤝
+                                </div>
+
+                                <p>
+                                    You haven't sent any offers yet.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</main>
+
+</body>
+
+</html>

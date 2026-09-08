@@ -1,0 +1,8040 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        AgriContract | AI Agriculture Marketplace for Farmers & Buyers
+    </title>
+
+    <meta name="description"
+          content="AgriContract is a smart agriculture marketplace connecting farmers and buyers with crop listings, direct offers, AI crop disease detection, weather intelligence and Jarvis AI agriculture assistance.">
+
+    <meta name="keywords"
+          content="AgriContract, agriculture marketplace, agricultural marketplace, farmers, buyers, sell crops online, buy crops online, contract farming, AI agriculture, crop disease detection, potato disease detection, machine learning agriculture, agricultural AI, farming technology, smart farming, Indian agriculture">
+
+    <meta name="author"
+          content="AgriContract">
+
+    <meta name="robots"
+          content="index, follow, max-image-preview:large">
+
+    <meta name="theme-color"
+          content="#15803d">
+
+    <meta name="application-name"
+          content="AgriContract">
+
+
+    <!-- Canonical -->
+
+    <link rel="canonical"
+          href="{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}">
+
+
+    <!-- Open Graph -->
+
+    <meta property="og:type"
+          content="website">
+
+    <meta property="og:title"
+          content="AgriContract | AI Agriculture Marketplace">
+
+    <meta property="og:description"
+          content="Connect farmers and buyers through a smart agriculture marketplace with AI-powered crop disease detection, weather intelligence and agricultural assistance.">
+
+    <meta property="og:url"
+          content="{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}">
+
+    <meta property="og:site_name"
+          content="AgriContract">
+
+
+    <!-- Twitter -->
+
+    <meta name="twitter:card"
+          content="summary_large_image">
+
+    <meta name="twitter:title"
+          content="AgriContract | Smart Agriculture Marketplace">
+
+    <meta name="twitter:description"
+          content="AI-powered agriculture marketplace connecting farmers and buyers.">
+
+
+    <!-- Fonts -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap"
+          rel="stylesheet">
+
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- Existing CSS -->
+
+    <link rel="stylesheet"
+          href="{% static 'styles.css' %}">
+
+
+    <!-- =====================================================
+         MAIN PAGE CSS
+    ====================================================== -->
+
+    <style>
+
+        /* =====================================================
+           VARIABLES
+        ====================================================== */
+
+        :root {
+
+            --green-dark: #14532d;
+            --green: #15803d;
+            --green-light: #22c55e;
+
+            --green-soft: #dcfce7;
+            --green-pale: #f0fdf4;
+
+            --text: #17251b;
+            --muted: #64746a;
+
+            --white: #ffffff;
+            --background: #f5f8f5;
+
+            --border: #e3ebe5;
+
+            --danger: #dc2626;
+
+            --warning: #f59e0b;
+
+            --shadow:
+                0 18px 50px rgba(20,83,45,.08);
+
+            --shadow-hover:
+                0 25px 60px rgba(20,83,45,.14);
+        }
+
+
+        /* =====================================================
+           RESET
+        ====================================================== */
+
+        * {
+
+            margin: 0;
+            padding: 0;
+
+            box-sizing: border-box;
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+            scroll-padding-top: 80px;
+        }
+
+
+        body {
+
+            font-family: 'Inter', sans-serif;
+
+            background:
+                var(--background);
+
+            color:
+                var(--text);
+
+            overflow-x: hidden;
+
+            width: 100%;
+
+            line-height: 1.5;
+        }
+
+
+        body.menu-open {
+
+            overflow: hidden;
+        }
+
+
+        img {
+
+            max-width: 100%;
+
+            height: auto;
+        }
+
+
+        button,
+        input,
+        textarea,
+        select {
+
+            font-family: inherit;
+        }
+
+
+        button {
+
+            -webkit-tap-highlight-color:
+                transparent;
+        }
+
+
+        a {
+
+            text-decoration: none;
+
+            color: inherit;
+        }
+
+
+        ::selection {
+
+            background:
+                var(--green);
+
+            color:
+                white;
+        }
+
+
+        /* =====================================================
+           CONTAINER
+        ====================================================== */
+
+        .container {
+
+            width:
+                min(
+                    1180px,
+                    calc(100% - 40px)
+                );
+
+            margin:
+                0 auto;
+        }
+
+
+        /* =====================================================
+           LOADING SCREEN
+        ====================================================== */
+
+        .loading-screen {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 99999;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #dcfce7,
+                    #f0fdf4 45%,
+                    #ffffff
+                );
+
+            transition:
+                opacity .5s ease,
+                visibility .5s ease;
+        }
+
+
+        .loading-screen.hidden {
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+        }
+
+
+        .loading-content {
+
+            text-align: center;
+
+            padding: 20px;
+        }
+
+
+        .loading-logo {
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 12px;
+
+            color:
+                var(--green-dark);
+
+            font-size: 27px;
+
+            font-weight: 900;
+
+            margin-bottom: 25px;
+        }
+
+
+        .loading-logo i {
+
+            color:
+                var(--green);
+
+            font-size: 32px;
+        }
+
+
+        .loading-spinner {
+
+            width: 42px;
+            height: 42px;
+
+            border:
+                4px solid #d1fae5;
+
+            border-top-color:
+                var(--green);
+
+            border-radius: 50%;
+
+            animation:
+                spin 1s linear infinite;
+
+            margin: auto;
+        }
+
+
+        .loading-content p {
+
+            margin-top: 15px;
+
+            color:
+                var(--muted);
+
+            font-size: 13px;
+        }
+
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ====================================================== */
+
+        .navbar {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 5000;
+
+            background:
+                rgba(255,255,255,.94);
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        .nav-container {
+
+            width:
+                min(
+                    1240px,
+                    calc(100% - 35px)
+                );
+
+            min-height: 72px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            position: relative;
+        }
+
+
+        .nav-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color:
+                var(--green-dark);
+
+            font-size: 21px;
+
+            font-weight: 900;
+
+            white-space: nowrap;
+
+            flex-shrink: 0;
+        }
+
+
+        .nav-brand i {
+
+            color:
+                var(--green);
+
+            font-size: 25px;
+        }
+
+
+        .nav-menu {
+
+            flex: 1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 3px;
+        }
+
+
+        .nav-link {
+
+            color:
+                #526158;
+
+            padding:
+                10px 10px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            border-radius: 9px;
+
+            transition:
+                .2s ease;
+        }
+
+
+        .nav-link:hover {
+
+            color:
+                var(--green);
+
+            background:
+                var(--green-pale);
+        }
+
+
+        .nav-link i {
+
+            margin-right: 4px;
+        }
+
+
+        .nav-auth-buttons {
+
+            display: flex;
+
+            gap: 8px;
+        }
+
+
+        .nav-user-container {
+
+            display: flex;
+
+            align-items: center;
+        }
+
+
+        /* =====================================================
+           HAMBURGER
+        ====================================================== */
+
+        .nav-toggle {
+
+            display: none;
+
+            width: 44px;
+            height: 44px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background:
+                var(--green-pale);
+
+            color:
+                var(--green-dark);
+
+            font-size: 20px;
+
+            cursor: pointer;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+        }
+
+
+        .nav-toggle:active {
+
+            transform:
+                scale(.95);
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ====================================================== */
+
+        .btn {
+
+            border: none;
+
+            cursor: pointer;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            padding:
+                11px 17px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            transition:
+                .25s ease;
+
+            min-height: 42px;
+        }
+
+
+        .btn-primary {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--green),
+                    var(--green-light)
+                );
+
+            color: white;
+
+            box-shadow:
+                0 8px 20px
+                rgba(21,128,61,.18);
+        }
+
+
+        .btn-primary:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(21,128,61,.25);
+        }
+
+
+        .btn-outline {
+
+            border:
+                1px solid #cbd8cf;
+
+            background:
+                white;
+
+            color:
+                var(--green-dark);
+        }
+
+
+        .btn-outline:hover {
+
+            border-color:
+                var(--green);
+
+            background:
+                var(--green-pale);
+        }
+
+
+        .btn-lg {
+
+            min-height: 48px;
+
+            padding:
+                14px 22px;
+
+            font-size: 14px;
+        }
+
+
+        .btn-full {
+
+            width: 100%;
+        }
+
+
+        .btn-white {
+
+            background:
+                white;
+
+            color:
+                var(--green-dark);
+        }
+
+
+        /* =====================================================
+           USER DROPDOWN
+        ====================================================== */
+
+        .user-dropdown {
+
+            position: relative;
+        }
+
+
+        .user-btn {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            border: none;
+
+            background:
+                transparent;
+
+            cursor: pointer;
+
+            padding: 4px;
+        }
+
+
+        .user-avatar-img {
+
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--green),
+                    var(--green-light)
+                );
+
+            color: white;
+
+            font-weight: 800;
+        }
+
+
+        #user-name {
+
+            max-width: 130px;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+
+            color:
+                var(--green-dark);
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .dropdown-menu {
+
+            position: absolute;
+
+            top:
+                calc(100% + 12px);
+
+            right: 0;
+
+            min-width: 220px;
+
+            padding: 8px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 20px 45px
+                rgba(0,0,0,.12);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform:
+                translateY(-7px);
+
+            transition:
+                .2s ease;
+        }
+
+
+        .dropdown-menu.show {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translateY(0);
+        }
+
+
+        .dropdown-menu a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 12px;
+
+            color:
+                #44534a;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            border-radius: 9px;
+        }
+
+
+        .dropdown-menu a:hover {
+
+            background:
+                var(--green-pale);
+
+            color:
+                var(--green);
+        }
+
+
+        .dropdown-menu form {
+
+            margin: 0;
+        }
+
+
+        .logout-button {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            border: none;
+
+            background:
+                transparent;
+
+            padding: 12px;
+
+            color:
+                var(--danger);
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            border-radius: 9px;
+
+            text-align: left;
+        }
+
+
+        .logout-button:hover {
+
+            background:
+                #fef2f2;
+        }
+
+
+        /* =====================================================
+           HERO
+        ====================================================== */
+
+        .hero {
+
+            min-height:
+                650px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            display: flex;
+
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #f0fdf4 0%,
+                    #ffffff 48%,
+                    #ecfdf5 100%
+                );
+        }
+
+
+        .hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(34,197,94,.09);
+
+            right: -180px;
+
+            top: -170px;
+        }
+
+
+        .hero::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(21,128,61,.06);
+
+            left: -130px;
+
+            bottom: -130px;
+        }
+
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 850px;
+
+            padding:
+                85px 0;
+        }
+
+
+        .hero-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                8px 14px;
+
+            border-radius: 999px;
+
+            background:
+                var(--green-soft);
+
+            color:
+                var(--green-dark);
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            margin-bottom: 22px;
+        }
+
+
+        .hero-title {
+
+            font-family:
+                'Playfair Display',
+                serif;
+
+            font-size:
+                clamp(
+                    42px,
+                    6vw,
+                    70px
+                );
+
+            line-height:
+                1.05;
+
+            color:
+                var(--green-dark);
+
+            letter-spacing:
+                -2px;
+        }
+
+
+        .text-gradient {
+
+            display: block;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--green),
+                    #4ade80
+                );
+
+            -webkit-background-clip:
+                text;
+
+            background-clip:
+                text;
+
+            color:
+                transparent;
+        }
+
+
+        .hero-description {
+
+            max-width: 700px;
+
+            color:
+                var(--muted);
+
+            font-size: 16px;
+
+            line-height: 1.8;
+
+            margin:
+                25px 0 30px;
+        }
+
+
+        .hero-stats {
+
+            display: flex;
+
+            gap: 35px;
+
+            margin-bottom: 35px;
+        }
+
+
+        .stat-item {
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .stat-number {
+
+            color:
+                var(--green-dark);
+
+            font-size: 27px;
+
+            font-weight: 900;
+        }
+
+
+        .stat-label {
+
+            color:
+                #718078;
+
+            font-size: 11px;
+
+            font-weight: 600;
+        }
+
+
+        .hero-buttons {
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+
+        /* =====================================================
+           GENERAL SECTIONS
+        ====================================================== */
+
+        .features,
+        .educational-resources,
+        .testimonials,
+        .how-it-works {
+
+            padding:
+                90px 0;
+        }
+
+
+        .section-header {
+
+            text-align: center;
+
+            max-width: 750px;
+
+            margin:
+                0 auto 45px;
+        }
+
+
+        .section-title {
+
+            font-family:
+                'Playfair Display',
+                serif;
+
+            color:
+                var(--green-dark);
+
+            font-size:
+                clamp(
+                    30px,
+                    4vw,
+                    43px
+                );
+
+            margin-bottom: 12px;
+        }
+
+
+        .section-subtitle {
+
+            color:
+                var(--muted);
+
+            line-height: 1.7;
+
+            font-size: 14px;
+        }
+
+
+        .section-label {
+
+            display: inline-block;
+
+            padding:
+                7px 12px;
+
+            border-radius: 999px;
+
+            background:
+                var(--green-soft);
+
+            color:
+                #166534;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* =====================================================
+           WEATHER
+        ====================================================== */
+
+        .weather-section {
+
+            padding:
+                55px 0;
+
+            background:
+                #f8faf8;
+        }
+
+
+        .weather-card {
+
+            max-width:
+                760px;
+
+            margin:
+                auto;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                22px;
+
+            padding:
+                28px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(20,83,45,.06);
+        }
+
+
+        .weather-header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap: 15px;
+
+            margin-bottom:
+                20px;
+        }
+
+
+        .weather-heading {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .weather-icon {
+
+            width: 45px;
+            height: 45px;
+
+            min-width: 45px;
+
+            border-radius: 13px;
+
+            background:
+                #e0f2fe;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+        }
+
+
+        .weather-heading h2 {
+
+            color:
+                var(--green-dark);
+
+            font-size: 17px;
+        }
+
+
+        .weather-heading p {
+
+            color:
+                #849189;
+
+            font-size: 11px;
+
+            margin-top: 3px;
+        }
+
+
+        .live-badge {
+
+            background:
+                var(--green-soft);
+
+            color:
+                #166534;
+
+            padding:
+                6px 10px;
+
+            border-radius:
+                999px;
+
+            font-size:
+                10px;
+
+            font-weight:
+                800;
+
+            white-space:
+                nowrap;
+        }
+
+
+        .weather-main {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+
+        #temp-display {
+
+            font-size: 52px;
+
+            font-weight: 900;
+
+            color:
+                var(--green-dark);
+        }
+
+
+        .city-display {
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+        }
+
+
+        .weather-metrics {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        .weather-metric {
+
+            padding: 13px;
+
+            border-radius: 12px;
+
+            background:
+                #f8faf8;
+
+            text-align: center;
+
+            min-width: 90px;
+        }
+
+
+        .weather-metric small {
+
+            color:
+                #849189;
+        }
+
+
+        .weather-metric strong {
+
+            display: block;
+
+            color:
+                var(--green-dark);
+        }
+
+
+        .weather-advice {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background:
+                var(--green-pale);
+
+            border:
+                1px solid #bbf7d0;
+
+            border-radius: 13px;
+        }
+
+
+        .weather-advice strong {
+
+            color:
+                #166534;
+
+            font-size: 12px;
+        }
+
+
+        .weather-advice p {
+
+            color:
+                #365b42;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+            margin-top: 5px;
+        }
+
+
+        /* =====================================================
+           MARKETPLACE
+        ====================================================== */
+
+        #marketplace {
+
+            background:
+                white;
+        }
+
+
+        .marketplace-toolbar {
+
+            display: flex;
+
+            justify-content: center;
+
+            margin-bottom: 40px;
+        }
+
+
+        .search-form {
+
+            width:
+                min(650px, 100%);
+
+            display: flex;
+
+            gap: 9px;
+
+            background:
+                white;
+
+            padding: 7px;
+
+            border-radius: 15px;
+
+            border:
+                1px solid var(--border);
+
+            box-shadow:
+                0 10px 30px
+                rgba(20,83,45,.06);
+        }
+
+
+        .search-form input {
+
+            flex: 1;
+
+            min-width: 0;
+
+            border: none;
+
+            outline: none;
+
+            padding:
+                12px 15px;
+
+            color:
+                var(--text);
+
+            background:
+                transparent;
+        }
+
+
+        .search-form input::placeholder {
+
+            color:
+                #9aa69e;
+        }
+
+
+        .crop-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fill,
+                    minmax(
+                        250px,
+                        1fr
+                    )
+                );
+
+            gap: 22px;
+        }
+
+
+        .crop-card {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                18px;
+
+            overflow:
+                hidden;
+
+            box-shadow:
+                0 10px 30px
+                rgba(20,83,45,.06);
+
+            transition:
+                .25s ease;
+        }
+
+
+        .crop-card:hover {
+
+            transform:
+                translateY(-6px);
+
+            box-shadow:
+                var(--shadow-hover);
+        }
+
+
+        .crop-image {
+
+            width: 100%;
+
+            height: 205px;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+
+        .crop-placeholder {
+
+            height: 205px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f0fdf4,
+                    #dcfce7
+                );
+
+            color:
+                var(--green);
+
+            font-size: 45px;
+        }
+
+
+        .crop-content {
+
+            padding: 20px;
+        }
+
+
+        .crop-tag {
+
+            display: inline-block;
+
+            padding:
+                5px 9px;
+
+            border-radius:
+                999px;
+
+            background:
+                var(--green-pale);
+
+            color:
+                var(--green);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            margin-bottom: 10px;
+        }
+
+
+        .crop-name {
+
+            color:
+                var(--green-dark);
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            margin-bottom: 5px;
+        }
+
+
+        .crop-variety {
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .crop-price {
+
+            color:
+                var(--green);
+
+            font-size: 21px;
+
+            font-weight: 900;
+
+            margin-bottom: 5px;
+        }
+
+
+        .crop-unit {
+
+            color:
+                #849189;
+
+            font-size: 11px;
+        }
+
+
+        .farmer-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin:
+                15px 0;
+
+            padding-top:
+                14px;
+
+            border-top:
+                1px solid #edf1ee;
+
+            color:
+                #657269;
+
+            font-size: 11px;
+        }
+
+
+        .farmer-avatar {
+
+            width: 27px;
+            height: 27px;
+
+            min-width: 27px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                var(--green-soft);
+
+            color:
+                var(--green-dark);
+
+            font-size: 11px;
+
+            font-weight: 800;
+        }
+
+
+        .offer-form {
+
+            margin-top:
+                12px;
+        }
+
+
+        .offer-form input {
+
+            width: 100%;
+
+            min-height: 44px;
+
+            padding:
+                11px 12px;
+
+            border-radius:
+                9px;
+
+            border:
+                1px solid #d7e1da;
+
+            outline: none;
+
+            margin-bottom:
+                9px;
+
+            font-size: 14px;
+        }
+
+
+        .offer-form input:focus {
+
+            border-color:
+                var(--green);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(34,197,94,.10);
+        }
+
+
+        .offer-form button {
+
+            width: 100%;
+        }
+
+
+        .login-required {
+
+            padding: 11px;
+
+            border-radius: 9px;
+
+            background:
+                #f8faf8;
+
+            color:
+                #6c786f;
+
+            font-size: 11px;
+
+            text-align: center;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           AI SECTION
+        ====================================================== */
+
+        .ai-section {
+
+            padding:
+                90px 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #052e16,
+                    #14532d
+                );
+
+            color:
+                white;
+        }
+
+
+        .ai-section .section-title {
+
+            color:
+                white;
+        }
+
+
+        .ai-section .section-subtitle {
+
+            color:
+                #bbf7d0;
+        }
+
+
+        .ai-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .ai-card {
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,.07);
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+
+            transition:
+                .25s ease;
+        }
+
+
+        .ai-card:hover {
+
+            transform:
+                translateY(-5px);
+
+            background:
+                rgba(255,255,255,.11);
+        }
+
+
+        .ai-icon {
+
+            width: 50px;
+            height: 50px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,.10);
+
+            color:
+                #86efac;
+
+            font-size: 21px;
+
+            margin-bottom:
+                18px;
+        }
+
+
+        .ai-card h3 {
+
+            font-size: 16px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .ai-card p {
+
+            color:
+                #bbf7d0;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           FEATURES
+        ====================================================== */
+
+        .features-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+
+        .feature-card {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                18px;
+
+            padding:
+                28px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(20,83,45,.05);
+
+            transition:
+                .25s ease;
+        }
+
+
+        .feature-card:hover {
+
+            transform:
+                translateY(-5px);
+
+            box-shadow:
+                var(--shadow-hover);
+        }
+
+
+        .feature-icon {
+
+            width: 54px;
+            height: 54px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background:
+                var(--green-soft);
+
+            color:
+                var(--green);
+
+            font-size: 21px;
+
+            margin-bottom:
+                18px;
+        }
+
+
+        .feature-card h3 {
+
+            color:
+                var(--green-dark);
+
+            font-size: 17px;
+
+            margin-bottom:
+                9px;
+        }
+
+
+        .feature-card p {
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           HOW IT WORKS
+        ====================================================== */
+
+        .how-it-works {
+
+            background:
+                var(--green-pale);
+        }
+
+
+        .process-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 25px;
+        }
+
+
+        .process-section {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                20px;
+
+            padding:
+                30px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(20,83,45,.05);
+        }
+
+
+        .process-title {
+
+            color:
+                var(--green-dark);
+
+            font-size: 20px;
+
+            margin-bottom:
+                25px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+        }
+
+
+        .process-step {
+
+            display: flex;
+
+            gap: 15px;
+
+            margin-bottom:
+                25px;
+        }
+
+
+        .step-number {
+
+            width: 34px;
+            height: 34px;
+
+            min-width: 34px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                var(--green-soft);
+
+            color:
+                var(--green-dark);
+
+            font-size: 12px;
+
+            font-weight: 900;
+        }
+
+
+        .step-content h4 {
+
+            color:
+                #26382d;
+
+            font-size: 14px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .step-content p {
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           EDUCATION
+        ====================================================== */
+
+        .resource-card {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                18px;
+
+            padding:
+                28px;
+
+            transition:
+                .25s ease;
+        }
+
+
+        .resource-card:hover {
+
+            transform:
+                translateY(-5px);
+        }
+
+
+        .resource-icon {
+
+            width: 52px;
+            height: 52px;
+
+            border-radius:
+                14px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                var(--green-pale);
+
+            color:
+                var(--green);
+
+            font-size: 21px;
+
+            margin-bottom:
+                17px;
+        }
+
+
+        .resource-card h3 {
+
+            color:
+                var(--green-dark);
+
+            margin-bottom:
+                7px;
+        }
+
+
+        .resource-card p {
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           PROJECT VISION
+        ====================================================== */
+
+        .testimonials {
+
+            background:
+                white;
+        }
+
+
+        .testimonials-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .testimonial-card {
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                18px;
+
+            padding:
+                25px;
+
+            background:
+                #fbfdfb;
+        }
+
+
+        .stars {
+
+            color:
+                var(--warning);
+
+            font-size: 11px;
+
+            margin-bottom:
+                15px;
+        }
+
+
+        .testimonial-content p {
+
+            color:
+                #536158;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            margin-bottom:
+                20px;
+        }
+
+
+        .testimonial-author {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .author-avatar {
+
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                var(--green-soft);
+
+            color:
+                var(--green-dark);
+
+            font-weight: 800;
+
+            font-size: 11px;
+        }
+
+
+        .author-info h4 {
+
+            color:
+                var(--green-dark);
+
+            font-size: 12px;
+        }
+
+
+        .author-info span {
+
+            color:
+                #849189;
+
+            font-size: 10px;
+        }
+
+
+        /* =====================================================
+           FAQ
+        ====================================================== */
+
+        .faq-section {
+
+            padding:
+                90px 0;
+
+            background:
+                #f8faf8;
+        }
+
+
+        .faq-list {
+
+            max-width:
+                850px;
+
+            margin:
+                auto;
+        }
+
+
+        .faq-item {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                14px;
+
+            margin-bottom:
+                12px;
+
+            overflow:
+                hidden;
+        }
+
+
+        .faq-question {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            border: none;
+
+            background:
+                white;
+
+            color:
+                var(--green-dark);
+
+            padding:
+                18px 20px;
+
+            cursor: pointer;
+
+            text-align:
+                left;
+
+            font-size:
+                14px;
+
+            font-weight:
+                700;
+        }
+
+
+        .faq-question i {
+
+            transition:
+                transform .2s ease;
+        }
+
+
+        .faq-item.active
+        .faq-question i {
+
+            transform:
+                rotate(180deg);
+        }
+
+
+        .faq-answer {
+
+            max-height: 0;
+
+            overflow: hidden;
+
+            transition:
+                max-height .3s ease;
+        }
+
+
+        .faq-answer p {
+
+            padding:
+                0 20px 18px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                13px;
+
+            line-height:
+                1.7;
+        }
+
+
+        /* =====================================================
+           CTA
+        ====================================================== */
+
+        .cta {
+
+            padding:
+                90px 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #15803d,
+                    #166534
+                );
+
+            color:
+                white;
+        }
+
+
+        .cta-content {
+
+            text-align:
+                center;
+        }
+
+
+        .cta-content h2 {
+
+            font-family:
+                'Playfair Display',
+                serif;
+
+            font-size:
+                clamp(
+                    30px,
+                    4vw,
+                    45px
+                );
+
+            margin-bottom:
+                12px;
+        }
+
+
+        .cta-content p {
+
+            color:
+                #dcfce7;
+
+            font-size:
+                14px;
+
+            margin-bottom:
+                25px;
+        }
+
+
+        .cta-buttons {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            gap:
+                10px;
+
+            flex-wrap:
+                wrap;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        .footer {
+
+            background:
+                #071b0d;
+
+            color:
+                white;
+
+            padding:
+                60px 0 25px;
+        }
+
+
+        .footer-content {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1.5fr 1fr 1fr 1fr;
+
+            gap:
+                35px;
+        }
+
+
+        .footer-brand {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            color:
+                #86efac;
+
+            font-size:
+                20px;
+
+            font-weight:
+                900;
+
+            margin-bottom:
+                14px;
+        }
+
+
+        .footer-section p {
+
+            color:
+                #9caf9f;
+
+            font-size:
+                12px;
+
+            line-height:
+                1.7;
+        }
+
+
+        .footer-section h4 {
+
+            margin-bottom:
+                15px;
+
+            color:
+                white;
+
+            font-size:
+                13px;
+        }
+
+
+        .footer-section ul {
+
+            list-style:
+                none;
+        }
+
+
+        .footer-section li {
+
+            margin-bottom:
+                9px;
+        }
+
+
+        .footer-section a {
+
+            color:
+                #91a294;
+
+            font-size:
+                12px;
+
+            transition:
+                .2s ease;
+        }
+
+
+        .footer-section a:hover {
+
+            color:
+                #86efac;
+        }
+
+
+        .social-links {
+
+            display:
+                flex;
+
+            gap:
+                8px;
+
+            margin-top:
+                18px;
+        }
+
+
+        .social-link {
+
+            width:
+                36px;
+
+            height:
+                36px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                9px;
+
+            background:
+                rgba(255,255,255,.07);
+
+            color:
+                #b7c7bb;
+
+            transition:
+                .2s ease;
+        }
+
+
+        .social-link:hover {
+
+            background:
+                var(--green);
+
+            color:
+                white;
+        }
+
+
+        .footer-bottom {
+
+            margin-top:
+                45px;
+
+            padding-top:
+                20px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.08);
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            gap:
+                20px;
+
+            font-size:
+                10px;
+        }
+
+
+        /* =====================================================
+           TOAST
+        ====================================================== */
+
+        .toast-container {
+
+            position:
+                fixed;
+
+            right:
+                20px;
+
+            bottom:
+                20px;
+
+            z-index:
+                99999;
+        }
+
+
+        .toast {
+
+            background:
+                var(--green-dark);
+
+            color:
+                white;
+
+            padding:
+                13px 17px;
+
+            border-radius:
+                11px;
+
+            box-shadow:
+                0 15px 30px
+                rgba(0,0,0,.18);
+
+            font-size:
+                12px;
+
+            margin-top:
+                8px;
+
+            max-width:
+                360px;
+
+            animation:
+                toastIn .3s ease;
+        }
+
+
+        @keyframes toastIn {
+
+            from {
+
+                opacity:
+                    0;
+
+                transform:
+                    translateX(20px);
+            }
+
+            to {
+
+                opacity:
+                    1;
+
+                transform:
+                    translateX(0);
+            }
+        }
+
+
+        /* =====================================================
+           MODALS
+        ====================================================== */
+
+        .modal {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            z-index:
+                10000;
+
+            display:
+                none;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                20px;
+        }
+
+
+        .modal.show {
+
+            display:
+                flex;
+        }
+
+
+        .modal-overlay {
+
+            position:
+                absolute;
+
+            inset:
+                0;
+
+            background:
+                rgba(0,0,0,.55);
+
+            backdrop-filter:
+                blur(5px);
+        }
+
+
+        .modal-content {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            width:
+                min(
+                    460px,
+                    100%
+                );
+
+            max-height:
+                90vh;
+
+            overflow-y:
+                auto;
+
+            background:
+                white;
+
+            border-radius:
+                20px;
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,.25);
+
+            animation:
+                modalIn .25s ease;
+        }
+
+
+        @keyframes modalIn {
+
+            from {
+
+                opacity:
+                    0;
+
+                transform:
+                    translateY(15px)
+                    scale(.98);
+            }
+
+            to {
+
+                opacity:
+                    1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+
+        .modal-lg .modal-content {
+
+            width:
+                min(
+                    650px,
+                    100%
+                );
+        }
+
+
+        .modal-header {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            padding:
+                22px 24px;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        .modal-header h2 {
+
+            color:
+                var(--green-dark);
+
+            font-size:
+                20px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+        }
+
+
+        .modal-close {
+
+            width:
+                35px;
+
+            height:
+                35px;
+
+            border:
+                none;
+
+            border-radius:
+                9px;
+
+            background:
+                #f5f7f5;
+
+            color:
+                #64746a;
+
+            font-size:
+                22px;
+
+            cursor:
+                pointer;
+        }
+
+
+        .modal-body {
+
+            padding:
+                24px;
+        }
+
+
+        .form-group {
+
+            margin-bottom:
+                17px;
+        }
+
+
+        .form-group label {
+
+            display:
+                block;
+
+            color:
+                var(--green-dark);
+
+            font-size:
+                12px;
+
+            font-weight:
+                700;
+
+            margin-bottom:
+                7px;
+        }
+
+
+        .form-group label i {
+
+            margin-right:
+                5px;
+        }
+
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+
+            width:
+                100%;
+
+            border:
+                1px solid #d7e1da;
+
+            border-radius:
+                10px;
+
+            outline:
+                none;
+
+            padding:
+                12px 13px;
+
+            font-size:
+                13px;
+
+            color:
+                var(--text);
+
+            background:
+                white;
+        }
+
+
+        .form-group textarea {
+
+            min-height:
+                90px;
+
+            resize:
+                vertical;
+        }
+
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+
+            border-color:
+                var(--green);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(34,197,94,.10);
+        }
+
+
+        .form-row {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                15px;
+        }
+
+
+        .text-center {
+
+            text-align:
+                center;
+
+            color:
+                var(--muted);
+
+            font-size:
+                12px;
+
+            margin-top:
+                17px;
+        }
+
+
+        .text-center a {
+
+            color:
+                var(--green);
+
+            font-weight:
+                700;
+        }
+
+
+        /* =====================================================
+           MOBILE ACCOUNT
+        ====================================================== */
+
+        .mobile-account {
+
+            margin-top:
+                8px;
+
+            padding:
+                13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f0fdf4,
+                    #ecfdf5
+                );
+
+            border:
+                1px solid #d1fae5;
+
+            border-radius:
+                14px;
+        }
+
+
+        .mobile-account-header {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            padding-bottom:
+                11px;
+
+            margin-bottom:
+                8px;
+
+            border-bottom:
+                1px solid #d1fae5;
+        }
+
+
+        .mobile-account-avatar {
+
+            width:
+                42px;
+
+            height:
+                42px;
+
+            min-width:
+                42px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--green),
+                    var(--green-light)
+                );
+
+            color:
+                white;
+
+            font-size:
+                15px;
+
+            font-weight:
+                800;
+        }
+
+
+        .mobile-account-name {
+
+            min-width:
+                0;
+        }
+
+
+        .mobile-account-name strong {
+
+            display:
+                block;
+
+            color:
+                var(--green-dark);
+
+            font-size:
+                13px;
+
+            white-space:
+                nowrap;
+
+            overflow:
+                hidden;
+
+            text-overflow:
+                ellipsis;
+        }
+
+
+        .mobile-account-name span {
+
+            display:
+                block;
+
+            color:
+                #6b7d71;
+
+            font-size:
+                10px;
+
+            margin-top:
+                2px;
+        }
+
+
+        .mobile-account-links {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                7px;
+        }
+
+
+        .mobile-account-link {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                11px 10px;
+
+            background:
+                white;
+
+            border:
+                1px solid #dfeae2;
+
+            border-radius:
+                9px;
+
+            color:
+                #365340;
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+            transition:
+                .2s ease;
+        }
+
+
+        .mobile-account-link i {
+
+            color:
+                var(--green);
+
+            font-size:
+                12px;
+        }
+
+
+        .mobile-account-link:hover {
+
+            border-color:
+                #86efac;
+
+            color:
+                var(--green);
+        }
+
+
+        .mobile-logout {
+
+            width:
+                100%;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            gap:
+                8px;
+
+            margin-top:
+                8px;
+
+            padding:
+                11px;
+
+            border:
+                1px solid #fecaca;
+
+            border-radius:
+                9px;
+
+            background:
+                white;
+
+            color:
+                var(--danger);
+
+            font-size:
+                12px;
+
+            font-weight:
+                700;
+
+            cursor:
+                pointer;
+        }
+
+
+        .mobile-auth {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                8px;
+
+            margin-top:
+                8px;
+
+            padding-top:
+                10px;
+
+            border-top:
+                1px solid var(--border);
+        }
+
+
+        .mobile-auth .btn {
+
+            width:
+                100%;
+        }
+
+
+        /* =====================================================
+           TABLET
+        ====================================================== */
+
+        @media (max-width: 1050px) {
+
+            .nav-container {
+
+                width:
+                    calc(100% - 28px);
+            }
+
+
+            .nav-menu {
+
+                gap:
+                    0;
+            }
+
+
+            .nav-link {
+
+                padding:
+                    9px 7px;
+
+                font-size:
+                    11px;
+            }
+
+
+            .nav-brand {
+
+                font-size:
+                    18px;
+            }
+
+
+            .nav-brand i {
+
+                font-size:
+                    22px;
+            }
+
+
+            .ai-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .features-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .footer-content {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE NAVIGATION
+        ====================================================== */
+
+        @media (max-width: 850px) {
+
+            .nav-container {
+
+                min-height:
+                    68px;
+
+                width:
+                    calc(100% - 24px);
+            }
+
+
+            .nav-menu {
+
+                display:
+                    none;
+
+                position:
+                    fixed;
+
+                top:
+                    68px;
+
+                left:
+                    0;
+
+                right:
+                    0;
+
+                width:
+                    100%;
+
+                max-height:
+                    calc(100vh - 68px);
+
+                overflow-y:
+                    auto;
+
+                padding:
+                    12px;
+
+                background:
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        .98
+                    );
+
+                backdrop-filter:
+                    blur(18px);
+
+                -webkit-backdrop-filter:
+                    blur(18px);
+
+                border-bottom:
+                    1px solid var(--border);
+
+                box-shadow:
+                    0 18px 40px
+                    rgba(0,0,0,.10);
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    stretch;
+
+                justify-content:
+                    flex-start;
+
+                gap:
+                    4px;
+
+                animation:
+                    mobileMenuIn
+                    .2s ease;
+            }
+
+
+            .nav-menu.mobile-open {
+
+                display:
+                    flex;
+            }
+
+
+            @keyframes mobileMenuIn {
+
+                from {
+
+                    opacity:
+                        0;
+
+                    transform:
+                        translateY(-8px);
+                }
+
+                to {
+
+                    opacity:
+                        1;
+
+                    transform:
+                        translateY(0);
+                }
+            }
+
+
+            .nav-link {
+
+                width:
+                    100%;
+
+                display:
+                    flex;
+
+                align-items:
+                    center;
+
+                gap:
+                    12px;
+
+                padding:
+                    14px;
+
+                font-size:
+                    14px;
+
+                color:
+                    #33483a;
+
+                border-radius:
+                    11px;
+            }
+
+
+            .nav-link i {
+
+                width:
+                    22px;
+
+                margin:
+                    0;
+
+                text-align:
+                    center;
+
+                color:
+                    var(--green);
+
+                font-size:
+                    15px;
+            }
+
+
+            .nav-auth-buttons {
+
+                display:
+                    none;
+            }
+
+
+            .nav-user-container {
+
+                display:
+                    none !important;
+            }
+
+
+            .nav-toggle {
+
+                display:
+                    flex;
+
+                margin-left:
+                    auto;
+            }
+
+
+            .mobile-account {
+
+                display:
+                    block;
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 768px) {
+
+            .container {
+
+                width:
+                    calc(100% - 30px);
+            }
+
+
+            .hero {
+
+                min-height:
+                    auto;
+            }
+
+
+            .hero-content {
+
+                padding:
+                    60px 0;
+            }
+
+
+            .hero-title {
+
+                font-size:
+                    clamp(
+                        38px,
+                        9vw,
+                        52px
+                    );
+
+                letter-spacing:
+                    -1.5px;
+            }
+
+
+            .hero-description {
+
+                font-size:
+                    14px;
+
+                line-height:
+                    1.7;
+            }
+
+
+            .hero-stats {
+
+                gap:
+                    20px;
+
+                flex-wrap:
+                    wrap;
+            }
+
+
+            .stat-number {
+
+                font-size:
+                    23px;
+            }
+
+
+            .hero-buttons {
+
+                width:
+                    100%;
+            }
+
+
+            .hero-buttons .btn {
+
+                flex:
+                    1;
+
+                min-width:
+                    180px;
+            }
+
+
+            .features,
+            .educational-resources,
+            .testimonials,
+            .how-it-works,
+            .ai-section,
+            .faq-section,
+            .cta {
+
+                padding:
+                    65px 0;
+            }
+
+
+            .weather-section {
+
+                padding:
+                    35px 0;
+            }
+
+
+            .section-header {
+
+                margin-bottom:
+                    32px;
+            }
+
+
+            .section-title {
+
+                font-size:
+                    32px;
+            }
+
+
+            .crop-grid {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0,1fr)
+                    );
+
+                gap:
+                    15px;
+            }
+
+
+            .crop-image,
+            .crop-placeholder {
+
+                height:
+                    170px;
+            }
+
+
+            .crop-content {
+
+                padding:
+                    16px;
+            }
+
+
+            .crop-name {
+
+                font-size:
+                    17px;
+            }
+
+
+            .crop-price {
+
+                font-size:
+                    18px;
+            }
+
+
+            .process-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .testimonials-grid {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0,1fr)
+                    );
+            }
+
+
+            .footer-content {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0,1fr)
+                    );
+            }
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ====================================================== */
+
+        @media (max-width: 520px) {
+
+            .container {
+
+                width:
+                    calc(100% - 24px);
+            }
+
+
+            .nav-brand {
+
+                font-size:
+                    17px;
+            }
+
+
+            .nav-brand i {
+
+                font-size:
+                    21px;
+            }
+
+
+            .hero-content {
+
+                padding:
+                    45px 0;
+            }
+
+
+            .hero-badge {
+
+                font-size:
+                    10px;
+
+                padding:
+                    7px 11px;
+            }
+
+
+            .hero-title {
+
+                font-size:
+                    37px;
+
+                line-height:
+                    1.08;
+            }
+
+
+            .hero-description {
+
+                font-size:
+                    13px;
+
+                margin:
+                    18px 0 25px;
+            }
+
+
+            .hero-stats {
+
+                display:
+                    grid;
+
+                grid-template-columns:
+                    repeat(3,1fr);
+
+                gap:
+                    8px;
+
+                margin-bottom:
+                    28px;
+            }
+
+
+            .stat-item {
+
+                padding:
+                    10px 5px;
+
+                text-align:
+                    center;
+
+                background:
+                    white;
+
+                border:
+                    1px solid var(--border);
+
+                border-radius:
+                    12px;
+            }
+
+
+            .stat-number {
+
+                font-size:
+                    20px;
+            }
+
+
+            .stat-label {
+
+                font-size:
+                    9px;
+
+                line-height:
+                    1.3;
+            }
+
+
+            .hero-buttons {
+
+                flex-direction:
+                    column;
+
+                gap:
+                    9px;
+            }
+
+
+            .hero-buttons .btn {
+
+                width:
+                    100%;
+
+                min-width:
+                    0;
+            }
+
+
+            .section-title {
+
+                font-size:
+                    29px;
+            }
+
+
+            .section-subtitle {
+
+                font-size:
+                    12px;
+            }
+
+
+            .crop-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .crop-image,
+            .crop-placeholder {
+
+                height:
+                    210px;
+            }
+
+
+            .crop-content {
+
+                padding:
+                    18px;
+            }
+
+
+            .ai-grid,
+            .features-grid,
+            .testimonials-grid,
+            .footer-content {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .process-section {
+
+                padding:
+                    22px;
+            }
+
+
+            .process-title {
+
+                font-size:
+                    18px;
+            }
+
+
+            .search-form {
+
+                flex-direction:
+                    column;
+
+                padding:
+                    6px;
+            }
+
+
+            .search-form input {
+
+                width:
+                    100%;
+
+                font-size:
+                    16px;
+            }
+
+
+            .search-form button {
+
+                width:
+                    100%;
+            }
+
+
+            /* WEATHER */
+
+            .weather-card {
+
+                padding:
+                    20px;
+
+                border-radius:
+                    18px;
+            }
+
+
+            .weather-header {
+
+                align-items:
+                    flex-start;
+            }
+
+
+            .weather-main {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    stretch;
+            }
+
+
+            #temp-display {
+
+                font-size:
+                    42px;
+            }
+
+
+            .weather-metrics {
+
+                width:
+                    100%;
+
+                display:
+                    grid;
+
+                grid-template-columns:
+                    1fr 1fr;
+
+                gap:
+                    8px;
+            }
+
+
+            .weather-metric {
+
+                min-width:
+                    0;
+
+                width:
+                    100%;
+            }
+
+
+            /* CTA */
+
+            .cta-content h2 {
+
+                font-size:
+                    30px;
+            }
+
+
+            .cta-buttons {
+
+                flex-direction:
+                    column;
+            }
+
+
+            .cta-buttons .btn {
+
+                width:
+                    100%;
+            }
+
+
+            /* FOOTER */
+
+            .footer {
+
+                padding:
+                    45px 0 20px;
+            }
+
+
+            .footer-bottom {
+
+                flex-direction:
+                    column;
+
+                text-align:
+                    center;
+
+                align-items:
+                    center;
+            }
+
+
+            /* TOAST */
+
+            .toast-container {
+
+                left:
+                    12px;
+
+                right:
+                    12px;
+
+                bottom:
+                    12px;
+            }
+
+
+            .toast {
+
+                width:
+                    100%;
+
+                max-width:
+                    none;
+
+                font-size:
+                    11px;
+            }
+
+
+            /* MODALS */
+
+            .modal {
+
+                padding:
+                    10px;
+            }
+
+
+            .modal-content {
+
+                width:
+                    100%;
+
+                max-height:
+                    94vh;
+
+                border-radius:
+                    16px;
+            }
+
+
+            .modal-header {
+
+                padding:
+                    17px;
+            }
+
+
+            .modal-header h2 {
+
+                font-size:
+                    17px;
+            }
+
+
+            .modal-body {
+
+                padding:
+                    17px;
+            }
+
+
+            .form-row {
+
+                grid-template-columns:
+                    1fr;
+
+                gap:
+                    0;
+            }
+
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+
+                font-size:
+                    16px;
+            }
+
+
+            .mobile-account-links {
+
+                grid-template-columns:
+                    1fr 1fr;
+            }
+        }
+
+
+        /* =====================================================
+           VERY SMALL PHONES
+        ====================================================== */
+
+        @media (max-width: 360px) {
+
+            .hero-title {
+
+                font-size:
+                    33px;
+            }
+
+
+            .hero-description {
+
+                font-size:
+                    12px;
+            }
+
+
+            .hero-stats {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .stat-item {
+
+                flex-direction:
+                    row;
+
+                justify-content:
+                    space-between;
+
+                align-items:
+                    center;
+
+                text-align:
+                    left;
+            }
+
+
+            .crop-image,
+            .crop-placeholder {
+
+                height:
+                    190px;
+            }
+
+
+            .mobile-account-links {
+
+                grid-template-columns:
+                    1fr;
+            }
+        }
+
+
+        /* =====================================================
+           TOUCH DEVICES
+        ====================================================== */
+
+        @media (hover: none) {
+
+            .btn:hover,
+            .crop-card:hover,
+            .feature-card:hover,
+            .ai-card:hover,
+            .resource-card:hover {
+
+                transform:
+                    none;
+            }
+        }
+
+
+        /* =====================================================
+           REDUCE MOTION
+        ====================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                scroll-behavior:
+                    auto !important;
+
+                animation-duration:
+                    .01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    .01ms !important;
+            }
+        }
+
+    </style>
+
+
+    <!-- =====================================================
+         STRUCTURED DATA
+    ====================================================== -->
+
+    <script type="application/ld+json">
+
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "AgriContract",
+        "description": "AI-powered agriculture marketplace connecting farmers and buyers.",
+        "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}"
+    }
+
+    </script>
+
+
+    <script type="application/ld+json">
+
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "AgriContract",
+        "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}",
+        "description": "Smart agriculture marketplace with AI-powered agricultural tools."
+    }
+
+    </script>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOADING SCREEN
+====================================================== -->
+
+<div id="loading-screen"
+     class="loading-screen"
+     aria-label="Loading AgriContract">
+
+    <div class="loading-content">
+
+        <div class="loading-logo">
+
+            <i class="fas fa-seedling"></i>
+
+            <span>
+                AgriContract
+            </span>
+
+        </div>
+
+        <div class="loading-spinner"></div>
+
+        <p>
+            Building a smarter farming future...
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="navbar"
+     aria-label="Main navigation">
+
+    <div class="nav-container">
+
+
+        <!-- LOGO -->
+
+        <a href="{% url 'home' %}"
+           class="nav-brand"
+           aria-label="AgriContract Home">
+
+            <i class="fas fa-seedling"></i>
+
+            <span>
+                AgriContract
+            </span>
+
+        </a>
+
+
+        <!-- =================================================
+             NAV MENU
+        ================================================== -->
+
+        <div id="nav-menu"
+             class="nav-menu">
+
+
+            <a href="{% url 'home' %}"
+               class="nav-link">
+
+                <i class="fas fa-house"></i>
+
+                <span>
+                    Home
+                </span>
+
+            </a>
+
+
+            <a href="#marketplace"
+               class="nav-link">
+
+                <i class="fas fa-store"></i>
+
+                <span>
+                    Marketplace
+                </span>
+
+            </a>
+
+
+            <a href="{% url 'crop_price_predictor' %}"
+   class="nav-link">
+
+    <i class="fas fa-chart-line"></i>
+
+    <span>
+        AI Price Predictor
+    </span>
+
+</a>
+
+
+            <a href="#features"
+               class="nav-link">
+
+                <i class="fas fa-star"></i>
+
+                <span>
+                    Features
+                </span>
+
+            </a>
+
+
+            <a href="#how-it-works"
+               class="nav-link">
+
+                <i class="fas fa-circle-info"></i>
+
+                <span>
+                    How It Works
+                </span>
+
+            </a>
+
+
+            <a href="{% url 'disease_detector' %}"
+               class="nav-link">
+
+                <i class="fas fa-microscope"></i>
+
+                <span>
+                    AI Disease Detector
+                </span>
+
+            </a>
+
+
+            <!-- =================================================
+                 MOBILE LOGGED-IN ACCOUNT
+            ================================================== -->
+
+            {% if user.is_authenticated %}
+
+                <div class="mobile-account">
+
+
+                    <div class="mobile-account-header">
+
+                        <div class="mobile-account-avatar">
+
+                            {{ user.username|slice:":1"|upper }}
+
+                        </div>
+
+
+                        <div class="mobile-account-name">
+
+                            <strong>
+
+                                {{ user.first_name|default:user.username }}
+
+                            </strong>
+
+                            <span>
+
+                                {% if user.userprofile.role == "farmer" %}
+
+                                    🌾 Farmer Account
+
+                                {% else %}
+
+                                    🛒 Buyer Account
+
+                                {% endif %}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="mobile-account-links">
+
+
+                        {% if user.userprofile.role == "farmer" %}
+
+                            <a href="{% url 'dashboard' %}"
+                               class="mobile-account-link">
+
+                                <i class="fas fa-chart-line"></i>
+
+                                <span>
+                                    Dashboard
+                                </span>
+
+                            </a>
+
+
+                            <a href="{% url 'add_crop' %}"
+                               class="mobile-account-link">
+
+                                <i class="fas fa-plus-circle"></i>
+
+                                <span>
+                                    Add Crop
+                                </span>
+
+                            </a>
+
+                        {% else %}
+
+                            <a href="{% url 'buyer_dashboard' %}"
+                               class="mobile-account-link">
+
+                                <i class="fas fa-chart-line"></i>
+
+                                <span>
+                                    Dashboard
+                                </span>
+
+                            </a>
+
+
+                            <a href="#marketplace"
+                               class="mobile-account-link">
+
+                                <i class="fas fa-shopping-cart"></i>
+
+                                <span>
+                                    Buy Crops
+                                </span>
+
+                            </a>
+
+                        {% endif %}
+
+
+                        <a href="{% url 'disease_detector' %}"
+                           class="mobile-account-link">
+
+                            <i class="fas fa-microscope"></i>
+
+                            <span>
+                                AI Detector
+                            </span>
+
+                        </a>
+
+
+                        <a href="{% url 'ai_chatbot' %}"
+                           class="mobile-account-link">
+
+                            <i class="fas fa-robot"></i>
+
+                            <span>
+                                Jarvis AI
+                            </span>
+
+                        </a>
+
+                    </div>
+
+
+                    <form action="{% url 'logout' %}"
+                          method="POST">
+
+                        {% csrf_token %}
+
+                        <button type="submit"
+                                class="mobile-logout">
+
+                            <i class="fas fa-right-from-bracket"></i>
+
+                            Logout
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+            {% else %}
+
+
+                <!-- MOBILE GUEST -->
+
+                <div class="mobile-auth">
+
+                    <button class="btn btn-outline"
+                            onclick="showLogin()"
+                            type="button">
+
+                        <i class="fas fa-sign-in-alt"></i>
+
+                        Login
+
+                    </button>
+
+
+                    <button class="btn btn-primary"
+                            onclick="showRegister()"
+                            type="button">
+
+                        <i class="fas fa-user-plus"></i>
+
+                        Register
+
+                    </button>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- =================================================
+             DESKTOP USER
+        ================================================== -->
+
+        <div id="nav-auth-logic">
+
+
+            {% if user.is_authenticated %}
+
+                <div class="nav-user-container">
+
+                    <div class="user-dropdown">
+
+                        <button class="user-btn"
+                                onclick="toggleUserMenu()"
+                                type="button"
+                                aria-label="Open account menu"
+                                aria-expanded="false">
+
+                            <div class="user-avatar-img">
+
+                                {{ user.username|slice:":1"|upper }}
+
+                            </div>
+
+
+                            <span id="user-name">
+
+                                {{ user.first_name|default:user.username }}
+
+                            </span>
+
+
+                            <i class="fas fa-chevron-down"
+                               style="
+                                   font-size:10px;
+                                   color:#64746a;
+                               ">
+                            </i>
+
+                        </button>
+
+
+                        <div id="user-dropdown"
+                             class="dropdown-menu">
+
+
+                            {% if user.userprofile.role == "buyer" %}
+
+                                <a href="{% url 'buyer_dashboard' %}">
+
+                                    <i class="fas fa-chart-pie"></i>
+
+                                    Buyer Dashboard
+
+                                </a>
+
+                            {% else %}
+
+                                <a href="{% url 'dashboard' %}">
+
+                                    <i class="fas fa-chart-pie"></i>
+
+                                    Farmer Dashboard
+
+                                </a>
+
+
+                                <a href="{% url 'add_crop' %}">
+
+                                    <i class="fas fa-plus-circle"></i>
+
+                                    Add Crop
+
+                                </a>
+
+                            {% endif %}
+
+
+                            <a href="{% url 'disease_detector' %}">
+
+                                <i class="fas fa-microscope"></i>
+
+                                AI Disease Detection
+
+                            </a>
+
+
+                            <a href="{% url 'ai_chatbot' %}">
+
+                                <i class="fas fa-robot"></i>
+
+                                Jarvis AI
+
+                            </a>
+
+
+                            <form action="{% url 'logout' %}"
+                                  method="POST">
+
+                                {% csrf_token %}
+
+                                <button type="submit"
+                                        class="logout-button">
+
+                                    <i class="fas fa-sign-out-alt"></i>
+
+                                    Logout
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            {% else %}
+
+                <div class="nav-auth-buttons">
+
+                    <button class="btn btn-outline"
+                            onclick="showLogin()"
+                            type="button">
+
+                        <i class="fas fa-sign-in-alt"></i>
+
+                        Login
+
+                    </button>
+
+
+                    <button class="btn btn-primary"
+                            onclick="showRegister()"
+                            type="button">
+
+                        <i class="fas fa-user-plus"></i>
+
+                        Get Started
+
+                    </button>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- MOBILE MENU -->
+
+        <button id="mobile-menu-button"
+                class="nav-toggle"
+                onclick="toggleMobileMenu()"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false">
+
+            <i class="fas fa-bars"></i>
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<header class="hero">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+
+            <div class="hero-badge">
+
+                <i class="fas fa-leaf"></i>
+
+                AI-Powered Smart Agriculture Platform
+
+            </div>
+
+
+            <h1 class="hero-title">
+
+                Connect Agriculture
+
+                <span class="text-gradient">
+
+                    With Intelligence.
+
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                AgriContract is a smart agriculture marketplace
+                connecting farmers and buyers while providing
+                AI-powered crop disease detection, weather
+                intelligence, agricultural assistance and
+                data-driven farming technology.
+
+            </p>
+
+
+            <div class="hero-stats">
+
+                <div class="stat-item">
+
+                    <span class="stat-number">
+
+                        <i class="fas fa-store"></i>
+
+                    </span>
+
+                    <span class="stat-label">
+
+                        Agriculture Marketplace
+
+                    </span>
+
+                </div>
+
+
+                <div class="stat-item">
+
+                    <span class="stat-number">
+
+                        <i class="fas fa-brain"></i>
+
+                    </span>
+
+                    <span class="stat-label">
+
+                        AI & Machine Learning
+
+                    </span>
+
+                </div>
+
+
+                <div class="stat-item">
+
+                    <span class="stat-number">
+
+                        <i class="fas fa-handshake"></i>
+
+                    </span>
+
+                    <span class="stat-label">
+
+                        Direct Farmer Connections
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-buttons">
+
+
+                {% if user.is_authenticated %}
+
+
+                    {% if user.userprofile.role == "farmer" %}
+
+                        <a href="{% url 'add_crop' %}"
+                           class="btn btn-primary btn-lg">
+
+                            <i class="fas fa-seedling"></i>
+
+                            List Your Crop
+
+                        </a>
+
+
+                        <a href="{% url 'dashboard' %}"
+                           class="btn btn-outline btn-lg">
+
+                            <i class="fas fa-chart-line"></i>
+
+                            Farmer Dashboard
+
+                        </a>
+
+                    {% else %}
+
+                        <a href="#marketplace"
+                           class="btn btn-primary btn-lg">
+
+                            <i class="fas fa-shopping-cart"></i>
+
+                            Explore Crops
+
+                        </a>
+
+
+                        <a href="{% url 'buyer_dashboard' %}"
+                           class="btn btn-outline btn-lg">
+
+                            <i class="fas fa-chart-line"></i>
+
+                            Buyer Dashboard
+
+                        </a>
+
+                    {% endif %}
+
+
+                {% else %}
+
+
+                    <button class="btn btn-primary btn-lg"
+                            onclick="showRegister('farmer')"
+                            type="button">
+
+                        <i class="fas fa-seedling"></i>
+
+                        Join as Farmer
+
+                    </button>
+
+
+                    <button class="btn btn-outline btn-lg"
+                            onclick="showRegister('buyer')"
+                            type="button">
+
+                        <i class="fas fa-shopping-cart"></i>
+
+                        Join as Buyer
+
+                    </button>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     WEATHER
+====================================================== -->
+
+<section class="weather-section"
+         aria-labelledby="weather-title">
+
+    <div class="container">
+
+        <div class="weather-card">
+
+
+            <div class="weather-header">
+
+                <div class="weather-heading">
+
+                    <div class="weather-icon">
+                        🌦️
+                    </div>
+
+                    <div>
+
+                        <h2 id="weather-title">
+                            Local Weather Intelligence
+                        </h2>
+
+                        <p>
+                            Weather information and practical
+                            farming recommendations
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <span class="live-badge">
+
+                    <i class="fas fa-circle"
+                       style="font-size:6px;">
+                    </i>
+
+                    LIVE
+
+                </span>
+
+            </div>
+
+
+            <div id="weather-status"
+                 style="
+                     text-align:center;
+                     padding:25px;
+                     color:#64746a;
+                     font-size:13px;
+                 ">
+
+                <div class="loading-spinner"
+                     style="
+                         width:30px;
+                         height:30px;
+                     ">
+                </div>
+
+                <p style="margin-top:12px;">
+                    Fetching local weather data...
+                </p>
+
+            </div>
+
+
+            <div id="weather-data"
+                 style="display:none;">
+
+
+                <div class="weather-main">
+
+
+                    <div>
+
+                        <div id="temp-display">
+                            --°C
+                        </div>
+
+
+                        <div class="city-display">
+
+                            <i class="fas fa-location-dot"></i>
+
+                            <span id="city-display">
+                                --
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="weather-metrics">
+
+
+                        <div class="weather-metric">
+
+                            <div>
+                                💧
+                            </div>
+
+                            <small>
+                                Humidity
+                            </small>
+
+                            <strong>
+
+                                <span id="humidity-display">
+                                    --
+                                </span>%
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="weather-metric">
+
+                            <div>
+                                💨
+                            </div>
+
+                            <small>
+                                Wind
+                            </small>
+
+                            <strong id="wind-display">
+                                --
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="weather-advice">
+
+                    <strong>
+
+                        <i class="fas fa-robot"></i>
+
+                        Farming Advice
+
+                    </strong>
+
+                    <p id="advice-display">
+
+                        Loading farming advice...
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     MARKETPLACE
+====================================================== -->
+
+<section id="marketplace"
+         class="features"
+         aria-labelledby="marketplace-title">
+
+    <div class="container">
+
+
+        <div class="section-header">
+
+            <span class="section-label">
+                🌾 AGRICULTURE MARKETPLACE
+            </span>
+
+
+            <h2 id="marketplace-title"
+                class="section-title">
+
+                Buy & Sell Fresh Agricultural Produce
+
+            </h2>
+
+
+            <p class="section-subtitle">
+
+                Discover crop listings from farmers,
+                compare prices and connect directly with
+                agricultural producers through AgriContract.
+
+            </p>
+
+        </div>
+
+
+        <div class="marketplace-toolbar">
+
+            <form method="GET"
+                  action="{% url 'home' %}#marketplace"
+                  class="search-form"
+                  role="search">
+
+                <input type="search"
+                       name="search"
+                       placeholder="Search wheat, rice, potato..."
+                       value="{{ request.GET.search }}"
+                       aria-label="Search agricultural crops">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="fas fa-search"></i>
+
+                    Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="crop-grid">
+
+
+            {% for crop in crops %}
+
+
+                <article class="crop-card">
+
+
+                    {% if crop.image %}
+
+                        <img src="{{ crop.image.url }}"
+                             alt="{{ crop.name }} crop listed on AgriContract"
+                             class="crop-image"
+                             loading="lazy">
+
+                    {% else %}
+
+                        <div class="crop-placeholder"
+                             aria-label="{{ crop.name }} crop">
+
+                            <i class="fas fa-leaf"></i>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="crop-content">
+
+
+                        <span class="crop-tag">
+
+                            AVAILABLE
+
+                        </span>
+
+
+                        <h3 class="crop-name">
+
+                            {{ crop.name }}
+
+                        </h3>
+
+
+                        <p class="crop-variety">
+
+                            <strong>
+                                Variety:
+                            </strong>
+
+                            {{ crop.variety }}
+
+                        </p>
+
+
+                        <div class="crop-price">
+
+                            ₹{{ crop.price }}
+
+                            <span class="crop-unit">
+
+                                / Qtl
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="farmer-info">
+
+                            <div class="farmer-avatar">
+
+                                {{ crop.farmer.username|slice:":1"|upper }}
+
+                            </div>
+
+                            <span>
+
+                                Listed by
+
+                                <strong>
+                                    {{ crop.farmer.username }}
+                                </strong>
+
+                            </span>
+
+                        </div>
+
+
+                        {% if user.is_authenticated %}
+
+
+                            {% if user.userprofile.role == "buyer" %}
+
+
+                                <form method="POST"
+                                      action="{% url 'send_offer' crop.id %}"
+                                      class="offer-form">
+
+                                    {% csrf_token %}
+
+
+                                    <!-- IMPORTANT:
+                                         backend expects "price"
+                                    -->
+
+                                    <input type="number"
+                                           name="price"
+                                           step="0.01"
+                                           min="0"
+                                           placeholder="Enter your offer price"
+                                           aria-label="Offer price"
+                                           required>
+
+
+                                    <button type="submit"
+                                            class="btn btn-primary">
+
+                                        <i class="fas fa-paper-plane"></i>
+
+                                        Send Offer
+
+                                    </button>
+
+                                </form>
+
+
+                            {% elif crop.farmer == user %}
+
+
+                                <a href="{% url 'dashboard' %}"
+                                   class="btn btn-outline"
+                                   style="width:100%;">
+
+                                    <i class="fas fa-chart-line"></i>
+
+                                    Manage Listing
+
+                                </a>
+
+                            {% endif %}
+
+
+                        {% else %}
+
+
+                            <div class="login-required">
+
+                                <i class="fas fa-lock"></i>
+
+                                Login as a buyer to make an offer.
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+
+            {% empty %}
+
+
+                <div style="
+                    grid-column:1/-1;
+                    text-align:center;
+                    padding:70px 20px;
+                    background:white;
+                    border:1px solid #e3ebe5;
+                    border-radius:18px;
+                ">
+
+                    <div style="
+                        font-size:40px;
+                        margin-bottom:15px;
+                    ">
+                        🌾
+                    </div>
+
+
+                    <h3 style="
+                        color:#14532d;
+                        margin-bottom:8px;
+                    ">
+
+                        No crops found
+
+                    </h3>
+
+
+                    <p style="
+                        color:#64746a;
+                        font-size:13px;
+                    ">
+
+                        Try another crop name or check back later.
+
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     AI FEATURES
+====================================================== -->
+
+<section id="ai-features"
+         class="ai-section"
+         aria-labelledby="ai-title">
+
+    <div class="container">
+
+
+        <div class="section-header">
+
+            <span class="section-label"
+                  style="
+                      background:rgba(134,239,172,.12);
+                      color:#bbf7d0;
+                  ">
+
+                🤖 ARTIFICIAL INTELLIGENCE
+
+            </span>
+
+
+            <h2 id="ai-title"
+                class="section-title">
+
+                AI-Powered Agriculture
+
+            </h2>
+
+
+            <p class="section-subtitle">
+
+                Modern artificial intelligence and machine
+                learning technologies designed to support
+                smarter agricultural decisions.
+
+            </p>
+
+        </div>
+
+
+        <div class="ai-grid">
+
+
+            <article class="ai-card">
+
+                <div class="ai-icon">
+
+                    <i class="fas fa-microscope"></i>
+
+                </div>
+
+                <h3>
+                    Crop Disease Detection
+                </h3>
+
+                <p>
+
+                    Upload crop images and analyze plant
+                    health using a deep-learning image
+                    classification model.
+
+                </p>
+
+            </article>
+
+
+            <article class="ai-card">
+
+                <div class="ai-icon">
+
+                    <i class="fas fa-cloud-sun"></i>
+
+                </div>
+
+                <h3>
+                    Weather Intelligence
+                </h3>
+
+                <p>
+
+                    Combine local weather information with
+                    practical agricultural recommendations.
+
+                </p>
+
+            </article>
+
+
+            <article class="ai-card">
+
+                <div class="ai-icon">
+
+                    <i class="fas fa-chart-line"></i>
+
+                </div>
+
+                <h3>
+                    Market Intelligence
+                </h3>
+
+                <p>
+
+                    Build data-driven agricultural analytics
+                    using historical prices, demand patterns
+                    and machine learning.
+
+                </p>
+
+            </article>
+
+
+            <article class="ai-card">
+
+                <div class="ai-icon">
+
+                    <i class="fas fa-robot"></i>
+
+                </div>
+
+                <h3>
+                    Jarvis AI Agriculture Assistant
+                </h3>
+
+                <p>
+
+                    Ask agricultural questions and receive
+                    AI-powered assistance through the
+                    AgriContract intelligent assistant.
+
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     WHY AGRICONTRACT
+====================================================== -->
+
+<section id="features"
+         class="features"
+         aria-labelledby="features-title">
+
+    <div class="container">
+
+
+        <div class="section-header">
+
+            <span class="section-label">
+                ⭐ PLATFORM FEATURES
+            </span>
+
+
+            <h2 id="features-title"
+                class="section-title">
+
+                Why Choose AgriContract?
+
+            </h2>
+
+
+            <p class="section-subtitle">
+
+                A digital agriculture platform combining
+                marketplace workflows with AI and machine
+                learning technologies.
+
+            </p>
+
+        </div>
+
+
+        <div class="features-grid">
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fas fa-handshake"></i>
+
+                </div>
+
+                <h3>
+                    Direct Farmer-Buyer Connection
+                </h3>
+
+                <p>
+
+                    Farmers can showcase their agricultural
+                    produce while buyers can discover crops
+                    and submit direct offers.
+
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fas fa-file-signature"></i>
+
+                </div>
+
+                <h3>
+                    Digital Offer & Contract Workflow
+                </h3>
+
+                <p>
+
+                    Manage agricultural offers through a
+                    structured pending, accepted and rejected
+                    contract workflow.
+
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fas fa-brain"></i>
+
+                </div>
+
+                <h3>
+                    Machine Learning Agriculture
+                </h3>
+
+                <p>
+
+                    Integrate machine learning and deep
+                    learning models into practical farming
+                    applications.
+
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fas fa-mobile-screen"></i>
+
+                </div>
+
+                <h3>
+                    Mobile-Friendly Platform
+                </h3>
+
+                <p>
+
+                    Responsive interfaces allow farmers and
+                    buyers to use the platform across phones,
+                    tablets and desktop computers.
+
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fas fa-language"></i>
+
+                </div>
+
+                <h3>
+                    Multilingual Agriculture
+                </h3>
+
+                <p>
+
+                    The platform architecture can support
+                    multiple Indian languages for improved
+                    agricultural accessibility.
+
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fas fa-database"></i>
+
+                </div>
+
+                <h3>
+                    Data-Driven Farming
+                </h3>
+
+                <p>
+
+                    Marketplace, weather and AI data provide
+                    a foundation for future agricultural
+                    analytics and prediction systems.
+
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     HOW IT WORKS
+====================================================== -->
+
+<section id="how-it-works"
+         class="how-it-works"
+         aria-labelledby="how-title">
+
+    <div class="container">
+
+
+        <div class="section-header">
+
+            <span class="section-label">
+                🚜 SIMPLE WORKFLOW
+            </span>
+
+
+            <h2 id="how-title"
+                class="section-title">
+
+                How AgriContract Works
+
+            </h2>
+
+
+            <p class="section-subtitle">
+
+                Simple digital workflows for agricultural
+                producers and buyers.
+
+            </p>
+
+        </div>
+
+
+        <div class="process-grid">
+
+
+            <!-- FARMER -->
+
+            <div class="process-section">
+
+                <h3 class="process-title">
+
+                    <i class="fas fa-seedling"></i>
+
+                    For Farmers
+
+                </h3>
+
+
+                <div class="process-step">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <div class="step-content">
+
+                        <h4>
+                            Create an Account
+                        </h4>
+
+                        <p>
+
+                            Register as a farmer and create
+                            your digital agricultural profile.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="process-step">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div class="step-content">
+
+                        <h4>
+                            List Your Produce
+                        </h4>
+
+                        <p>
+
+                            Add crop name, variety, quantity,
+                            price and an optional crop image.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="process-step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div class="step-content">
+
+                        <h4>
+                            Manage Buyer Offers
+                        </h4>
+
+                        <p>
+
+                            Review incoming offers and
+                            accept or reject them from your
+                            farmer dashboard.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUYER -->
+
+            <div class="process-section">
+
+                <h3 class="process-title">
+
+                    <i class="fas fa-shopping-cart"></i>
+
+                    For Buyers
+
+                </h3>
+
+
+                <div class="process-step">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <div class="step-content">
+
+                        <h4>
+                            Browse Agricultural Crops
+                        </h4>
+
+                        <p>
+
+                            Search and discover agricultural
+                            produce listed by farmers.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="process-step">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div class="step-content">
+
+                        <h4>
+                            Send an Offer
+                        </h4>
+
+                        <p>
+
+                            Enter your proposed price and
+                            submit an offer directly to the
+                            farmer.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="process-step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div class="step-content">
+
+                        <h4>
+                            Manage Contracts
+                        </h4>
+
+                        <p>
+
+                            Track submitted offers and
+                            communicate with farmers.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     AGRICULTURAL INTELLIGENCE
+====================================================== -->
+
+<section class="educational-resources"
+         aria-labelledby="intelligence-title">
+
+    <div class="container">
+
+
+        <div class="section-header">
+
+            <span class="section-label">
+                🧠 AGRICULTURAL INTELLIGENCE
+            </span>
+
+
+            <h2 id="intelligence-title"
+                class="section-title">
+
+                Technology for Modern Farming
+
+            </h2>
+
+
+            <p class="section-subtitle">
+
+                Explore the technology and intelligence
+                capabilities behind the AgriContract platform.
+
+            </p>
+
+        </div>
+
+
+        <div class="features-grid">
+
+
+            <article class="resource-card">
+
+                <div class="resource-icon">
+
+                    <i class="fas fa-graduation-cap"></i>
+
+                </div>
+
+                <h3>
+                    Farming Knowledge
+                </h3>
+
+                <p>
+
+                    Provide farmers with practical agricultural
+                    information and technology-assisted
+                    knowledge resources.
+
+                </p>
+
+            </article>
+
+
+            <article class="resource-card">
+
+                <div class="resource-icon">
+
+                    <i class="fas fa-chart-bar"></i>
+
+                </div>
+
+                <h3>
+                    Agricultural Market Analysis
+                </h3>
+
+                <p>
+
+                    Future machine learning systems can analyze
+                    historical agricultural prices and demand
+                    patterns.
+
+                </p>
+
+            </article>
+
+
+            <article class="resource-card">
+
+                <div class="resource-icon">
+
+                    <i class="fas fa-leaf"></i>
+
+                </div>
+
+                <h3>
+                    Crop Health Intelligence
+                </h3>
+
+                <p>
+
+                    AI-based crop health analysis can help
+                    identify potential disease problems earlier.
+
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PROJECT VISION
+====================================================== -->
+
+<section class="testimonials"
+         aria-labelledby="vision-title">
+
+    <div class="container">
+
+
+        <div class="section-header">
+
+            <span class="section-label">
+                🌱 OUR VISION
+            </span>
+
+
+            <h2 id="vision-title"
+                class="section-title">
+
+                Building the Future of Digital Agriculture
+
+            </h2>
+
+
+            <p class="section-subtitle">
+
+                AgriContract brings together agriculture,
+                software engineering, machine learning and
+                artificial intelligence.
+
+            </p>
+
+        </div>
+
+
+        <div class="testimonials-grid">
+
+
+            <article class="testimonial-card">
+
+                <div class="stars">
+
+                    <i class="fas fa-seedling"></i>
+
+                </div>
+
+                <div class="testimonial-content">
+
+                    <p>
+
+                        AgriContract gives farmers a digital
+                        way to showcase their produce and
+                        connect with potential buyers.
+
+                    </p>
+
+                </div>
+
+                <div class="testimonial-author">
+
+                    <div class="author-avatar">
+                        F
+                    </div>
+
+                    <div class="author-info">
+
+                        <h4>
+                            Farmer Marketplace
+                        </h4>
+
+                        <span>
+                            Digital Agriculture
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <article class="testimonial-card">
+
+                <div class="stars">
+
+                    <i class="fas fa-brain"></i>
+
+                </div>
+
+                <div class="testimonial-content">
+
+                    <p>
+
+                        AI and machine learning modules create
+                        opportunities for more data-driven
+                        agricultural decision support.
+
+                    </p>
+
+                </div>
+
+                <div class="testimonial-author">
+
+                    <div class="author-avatar">
+                        AI
+                    </div>
+
+                    <div class="author-info">
+
+                        <h4>
+                            AI Agriculture
+                        </h4>
+
+                        <span>
+                            Intelligent Decision Support
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <article class="testimonial-card">
+
+                <div class="stars">
+
+                    <i class="fas fa-code"></i>
+
+                </div>
+
+                <div class="testimonial-content">
+
+                    <p>
+
+                        The project combines Django,
+                        databases, machine learning,
+                        deep learning and modern web
+                        development.
+
+                    </p>
+
+                </div>
+
+                <div class="testimonial-author">
+
+                    <div class="author-avatar">
+                        ML
+                    </div>
+
+                    <div class="author-info">
+
+                        <h4>
+                            Technology Platform
+                        </h4>
+
+                        <span>
+                            Django + AI/ML
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FAQ
+====================================================== -->
+
+<section class="faq-section"
+         aria-labelledby="faq-title">
+
+    <div class="container">
+
+
+        <div class="section-header">
+
+            <span class="section-label">
+                ❓ AGRICULTURE FAQ
+            </span>
+
+
+            <h2 id="faq-title"
+                class="section-title">
+
+                Frequently Asked Questions
+
+            </h2>
+
+
+            <p class="section-subtitle">
+
+                Learn how AgriContract connects agricultural
+                producers, buyers and AI-powered tools.
+
+            </p>
+
+        </div>
+
+
+        <div class="faq-list">
+
+
+            <div class="faq-item">
+
+                <button class="faq-question"
+                        type="button">
+
+                    <span>
+                        What is AgriContract?
+                    </span>
+
+                    <i class="fas fa-chevron-down"></i>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        AgriContract is a smart agriculture
+                        marketplace designed to connect farmers
+                        and buyers while providing AI-powered
+                        agricultural technology.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question"
+                        type="button">
+
+                    <span>
+                        How can farmers sell crops online?
+                    </span>
+
+                    <i class="fas fa-chevron-down"></i>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        Farmers can create an account, add
+                        agricultural crop listings with details
+                        such as variety, quantity and price,
+                        and receive offers from buyers.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question"
+                        type="button">
+
+                    <span>
+                        How can buyers purchase agricultural crops?
+                    </span>
+
+                    <i class="fas fa-chevron-down"></i>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        Buyers can browse available crop
+                        listings, search for agricultural
+                        produce and submit an offer price
+                        directly to a farmer.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question"
+                        type="button">
+
+                    <span>
+                        What is AI crop disease detection?
+                    </span>
+
+                    <i class="fas fa-chevron-down"></i>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        AI crop disease detection uses an
+                        image classification model to analyze
+                        uploaded crop images and identify
+                        potential crop diseases.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question"
+                        type="button">
+
+                    <span>
+                        What AI features does AgriContract provide?
+                    </span>
+
+                    <i class="fas fa-chevron-down"></i>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        The platform includes crop disease
+                        detection, weather intelligence,
+                        agricultural market intelligence and
+                        the Jarvis AI agriculture assistant.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question"
+                        type="button">
+
+                    <span>
+                        Is AgriContract mobile friendly?
+                    </span>
+
+                    <i class="fas fa-chevron-down"></i>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        Yes. The interface is designed to
+                        adapt to smartphones, tablets and
+                        desktop computers.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FAQ STRUCTURED DATA
+====================================================== -->
+
+<script type="application/ld+json">
+
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+
+        {
+            "@type": "Question",
+            "name": "What is AgriContract?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "AgriContract is a smart agriculture marketplace designed to connect farmers and buyers while providing AI-powered agricultural technology."
+            }
+        },
+
+        {
+            "@type": "Question",
+            "name": "How can farmers sell crops online?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Farmers can create an account, add agricultural crop listings with details such as variety, quantity and price, and receive offers from buyers."
+            }
+        },
+
+        {
+            "@type": "Question",
+            "name": "How can buyers purchase agricultural crops?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Buyers can browse available crop listings, search for agricultural produce and submit an offer price directly to a farmer."
+            }
+        },
+
+        {
+            "@type": "Question",
+            "name": "What is AI crop disease detection?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "AI crop disease detection uses an image classification model to analyze uploaded crop images and identify potential crop diseases."
+            }
+        },
+
+        {
+            "@type": "Question",
+            "name": "What AI features does AgriContract provide?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "AgriContract provides crop disease detection, weather intelligence, agricultural market intelligence and a Jarvis AI agriculture assistant."
+            }
+        },
+
+        {
+            "@type": "Question",
+            "name": "Is AgriContract mobile friendly?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. AgriContract uses a responsive interface designed for smartphones, tablets and desktop computers."
+            }
+        }
+
+    ]
+}
+
+</script>
+
+
+
+<!-- =====================================================
+     CTA
+====================================================== -->
+
+<section class="cta">
+
+    <div class="container">
+
+        <div class="cta-content">
+
+
+            <h2>
+
+                Build a Smarter Agricultural Future
+
+            </h2>
+
+
+            <p>
+
+                Connect farmers and buyers and explore
+                AI-powered agriculture technology.
+
+            </p>
+
+
+            <div class="cta-buttons">
+
+
+                {% if user.is_authenticated %}
+
+
+                    {% if user.userprofile.role == "farmer" %}
+
+                        <a href="{% url 'add_crop' %}"
+                           class="btn btn-white btn-lg">
+
+                            <i class="fas fa-plus"></i>
+
+                            Add Your Crop
+
+                        </a>
+
+                    {% else %}
+
+                        <a href="#marketplace"
+                           class="btn btn-white btn-lg">
+
+                            <i class="fas fa-search"></i>
+
+                            Explore Marketplace
+
+                        </a>
+
+                    {% endif %}
+
+
+                {% else %}
+
+                    <button class="btn btn-white btn-lg"
+                            onclick="showRegister()"
+                            type="button">
+
+                        <i class="fas fa-rocket"></i>
+
+                        Get Started
+
+                    </button>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer id="about"
+        class="footer">
+
+    <div class="container">
+
+
+        <div class="footer-content">
+
+
+            <div class="footer-section">
+
+
+                <div class="footer-brand">
+
+                    <i class="fas fa-seedling"></i>
+
+                    AgriContract
+
+                </div>
+
+
+                <p>
+
+                    AgriContract is a smart agriculture
+                    marketplace connecting farmers and
+                    buyers while exploring AI and machine
+                    learning applications for agriculture.
+
+                </p>
+
+
+                <div class="social-links">
+
+
+                    <a href="#"
+                       class="social-link"
+                       onclick="return false;"
+                       aria-label="LinkedIn">
+
+                        <i class="fab fa-linkedin-in"></i>
+
+                    </a>
+
+
+                    <a href="#"
+                       class="social-link"
+                       onclick="return false;"
+                       aria-label="GitHub">
+
+                        <i class="fab fa-github"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-section">
+
+                <h4>
+                    Platform
+                </h4>
+
+                <ul>
+
+                    <li>
+                        <a href="#marketplace">
+                            Marketplace
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#ai-features">
+                            AI Features
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#features">
+                            Features
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#how-it-works">
+                            How It Works
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="footer-section">
+
+                <h4>
+                    Agriculture AI
+                </h4>
+
+                <ul>
+
+                    <li>
+
+                        <a href="{% url 'disease_detector' %}">
+
+                            Disease Detection
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="#ai-features">
+
+                            Weather Intelligence
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="#ai-features">
+
+                            Market Intelligence
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="{% url 'ai_chatbot' %}">
+
+                            Jarvis AI
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="footer-section">
+
+                <h4>
+                    Account
+                </h4>
+
+                <ul>
+
+
+                    {% if user.is_authenticated %}
+
+
+                        {% if user.userprofile.role == "farmer" %}
+
+                            <li>
+
+                                <a href="{% url 'dashboard' %}">
+
+                                    Farmer Dashboard
+
+                                </a>
+
+                            </li>
+
+
+                            <li>
+
+                                <a href="{% url 'add_crop' %}">
+
+                                    Add Crop
+
+                                </a>
+
+                            </li>
+
+
+                        {% else %}
+
+
+                            <li>
+
+                                <a href="{% url 'buyer_dashboard' %}">
+
+                                    Buyer Dashboard
+
+                                </a>
+
+                            </li>
+
+                        {% endif %}
+
+
+                    {% else %}
+
+
+                        <li>
+
+                            <a href="#"
+                               onclick="
+                                   showLogin();
+                                   return false;
+                               ">
+
+                                Login
+
+                            </a>
+
+                        </li>
+
+
+                        <li>
+
+                            <a href="#"
+                               onclick="
+                                   showRegister();
+                                   return false;
+                               ">
+
+                                Register
+
+                            </a>
+
+                        </li>
+
+
+                    {% endif %}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+
+                © 2026 AgriContract.
+                All rights reserved.
+
+            </p>
+
+
+            <p>
+
+                Built with Django •
+                Machine Learning •
+                Deep Learning •
+                AI
+
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     LOGIN MODAL
+====================================================== -->
+
+<div id="login-modal"
+     class="modal"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="login-title">
+
+
+    <div class="modal-overlay"
+         onclick="closeModal('login-modal')">
+    </div>
+
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <h2 id="login-title">
+
+                <i class="fas fa-sign-in-alt"></i>
+
+                Welcome Back
+
+            </h2>
+
+
+            <button class="modal-close"
+                    onclick="closeModal('login-modal')"
+                    type="button"
+                    aria-label="Close login">
+
+                &times;
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <form method="POST"
+                  action="{% url 'login' %}">
+
+                {% csrf_token %}
+
+
+                <div class="form-group">
+
+                    <label>
+
+                        <i class="fas fa-envelope"></i>
+
+                        Email / Username
+
+                    </label>
+
+                    <input type="text"
+                           name="username"
+                           required
+                           autocomplete="username"
+                           placeholder="Enter your email">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+
+                        <i class="fas fa-lock"></i>
+
+                        Password
+
+                    </label>
+
+                    <input type="password"
+                           name="password"
+                           required
+                           autocomplete="current-password"
+                           placeholder="Enter your password">
+
+                </div>
+
+
+                <button type="submit"
+                        class="btn btn-primary btn-full">
+
+                    <i class="fas fa-sign-in-alt"></i>
+
+                    Sign In
+
+                </button>
+
+            </form>
+
+
+            <p class="text-center">
+
+                Don't have an account?
+
+                <a href="#"
+                   onclick="
+                       closeModal('login-modal');
+                       showRegister();
+                       return false;
+                   ">
+
+                    Create Account
+
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     REGISTER MODAL
+====================================================== -->
+
+<div id="register-modal"
+     class="modal modal-lg"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="register-title">
+
+
+    <div class="modal-overlay"
+         onclick="closeModal('register-modal')">
+    </div>
+
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <h2 id="register-title">
+
+                <i class="fas fa-user-plus"></i>
+
+                Create Your Account
+
+            </h2>
+
+
+            <button class="modal-close"
+                    onclick="closeModal('register-modal')"
+                    type="button"
+                    aria-label="Close registration">
+
+                &times;
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <form method="POST"
+                  action="{% url 'register' %}">
+
+
+                {% csrf_token %}
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fas fa-user"></i>
+
+                            Full Name
+
+                        </label>
+
+                        <input type="text"
+                               name="name"
+                               required
+                               autocomplete="name"
+                               placeholder="Your full name">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fas fa-envelope"></i>
+
+                            Email
+
+                        </label>
+
+                        <input type="email"
+                               name="username"
+                               required
+                               autocomplete="email"
+                               placeholder="you@example.com">
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+
+                        <i class="fas fa-user-tag"></i>
+
+                        Account Type
+
+                    </label>
+
+                    <select name="role"
+                            id="register-role"
+                            required>
+
+                        <option value="">
+                            Select your role
+                        </option>
+
+                        <option value="farmer">
+                            🌾 Farmer — Sell crops
+                        </option>
+
+                        <option value="buyer">
+                            🛒 Buyer — Purchase crops
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fas fa-lock"></i>
+
+                            Password
+
+                        </label>
+
+                        <input type="password"
+                               name="password"
+                               required
+                               minlength="8"
+                               autocomplete="new-password"
+                               placeholder="Minimum 8 characters">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fas fa-lock"></i>
+
+                            Confirm Password
+
+                        </label>
+
+                        <input type="password"
+                               name="confirm_password"
+                               required
+                               autocomplete="new-password"
+                               placeholder="Confirm password">
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+
+                        <i class="fas fa-phone"></i>
+
+                        Phone Number
+
+                    </label>
+
+                    <input type="tel"
+                           name="phone"
+                           required
+                           autocomplete="tel"
+                           placeholder="Your phone number">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+
+                        <i class="fas fa-location-dot"></i>
+
+                        Address
+
+                    </label>
+
+                    <textarea name="address"
+                              required
+                              autocomplete="street-address"
+                              placeholder="Your address"></textarea>
+
+                </div>
+
+
+                <div class="form-group"
+                     style="
+                         display:flex;
+                         align-items:flex-start;
+                         gap:8px;
+                     ">
+
+                    <input type="checkbox"
+                           required
+                           style="
+                               width:auto;
+                               margin-top:2px;
+                           ">
+
+                    <span style="
+                        color:#64746a;
+                        font-size:11px;
+                        line-height:1.5;
+                    ">
+
+                        I agree to the Terms of Service
+                        and Privacy Policy.
+
+                    </span>
+
+                </div>
+
+
+                <button type="submit"
+                        class="btn btn-primary btn-full">
+
+                    <i class="fas fa-user-plus"></i>
+
+                    Create Account
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     TOAST
+====================================================== -->
+
+<div id="toast-container"
+     class="toast-container">
+</div>
+
+
+
+<!-- =====================================================
+     EXISTING JAVASCRIPT
+====================================================== -->
+
+<script src="{% static 'script.js' %}"></script>
+
+
+
+<!-- =====================================================
+     PAGE JAVASCRIPT
+====================================================== -->
+
+<script>
+
+
+/* =====================================================
+   USER DROPDOWN
+===================================================== */
+
+function toggleUserMenu() {
+
+    const menu =
+        document.getElementById(
+            "user-dropdown"
+        );
+
+    const button =
+        document.querySelector(
+            ".user-btn"
+        );
+
+
+    if (!menu) return;
+
+
+    const isOpen =
+        menu.classList.toggle("show");
+
+
+    if (button) {
+
+        button.setAttribute(
+            "aria-expanded",
+            isOpen ? "true" : "false"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CLOSE DROPDOWN OUTSIDE
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const dropdown =
+            document.querySelector(
+                ".user-dropdown"
+            );
+
+        const menu =
+            document.getElementById(
+                "user-dropdown"
+            );
+
+
+        if (!dropdown || !menu) {
+            return;
+        }
+
+
+        if (!dropdown.contains(event.target)) {
+
+            menu.classList.remove("show");
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+function toggleMobileMenu() {
+
+    const menu =
+        document.getElementById(
+            "nav-menu"
+        );
+
+    const button =
+        document.getElementById(
+            "mobile-menu-button"
+        );
+
+
+    if (!menu || !button) {
+        return;
+    }
+
+
+    const isOpen =
+        menu.classList.toggle(
+            "mobile-open"
+        );
+
+
+    button.setAttribute(
+        "aria-expanded",
+        isOpen
+            ? "true"
+            : "false"
+    );
+
+
+    button.setAttribute(
+        "aria-label",
+        isOpen
+            ? "Close navigation menu"
+            : "Open navigation menu"
+    );
+
+
+    const icon =
+        button.querySelector("i");
+
+
+    if (icon) {
+
+        icon.className =
+            isOpen
+                ? "fas fa-xmark"
+                : "fas fa-bars";
+    }
+
+
+    document.body.classList.toggle(
+        "menu-open",
+        isOpen
+    );
+}
+
+
+/* =====================================================
+   CLOSE MOBILE MENU
+===================================================== */
+
+function closeMobileMenu() {
+
+    const menu =
+        document.getElementById(
+            "nav-menu"
+        );
+
+    const button =
+        document.getElementById(
+            "mobile-menu-button"
+        );
+
+
+    if (menu) {
+
+        menu.classList.remove(
+            "mobile-open"
+        );
+    }
+
+
+    if (button) {
+
+        button.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+
+        button.setAttribute(
+            "aria-label",
+            "Open navigation menu"
+        );
+
+
+        const icon =
+            button.querySelector("i");
+
+
+        if (icon) {
+
+            icon.className =
+                "fas fa-bars";
+        }
+    }
+
+
+    document.body.classList.remove(
+        "menu-open"
+    );
+}
+
+
+/* =====================================================
+   CLOSE MOBILE MENU ON LINKS
+===================================================== */
+
+document.querySelectorAll(
+    "#nav-menu .nav-link, " +
+    "#nav-menu .mobile-account-link"
+).forEach(
+    function(link) {
+
+        link.addEventListener(
+            "click",
+            function() {
+
+                closeMobileMenu();
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
+   CLOSE MOBILE MENU ON RESIZE
+===================================================== */
+
+window.addEventListener(
+    "resize",
+    function() {
+
+        if (
+            window.innerWidth > 850
+        ) {
+
+            closeMobileMenu();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key !== "Escape"
+        ) {
+            return;
+        }
+
+
+        const dropdown =
+            document.getElementById(
+                "user-dropdown"
+            );
+
+
+        if (dropdown) {
+
+            dropdown.classList.remove(
+                "show"
+            );
+        }
+
+
+        closeMobileMenu();
+
+
+        document
+            .querySelectorAll(".modal.show")
+            .forEach(
+                function(modal) {
+
+                    modal.classList.remove(
+                        "show"
+                    );
+
+                }
+            );
+
+
+        document.body.style.overflow =
+            "";
+
+    }
+);
+
+
+/* =====================================================
+   LOADING SCREEN
+===================================================== */
+
+window.addEventListener(
+    "load",
+    function() {
+
+        setTimeout(
+            function() {
+
+                const loading =
+                    document.getElementById(
+                        "loading-screen"
+                    );
+
+
+                if (loading) {
+
+                    loading.classList.add(
+                        "hidden"
+                    );
+
+                }
+
+            },
+            500
+        );
+
+    }
+);
+
+
+/* =====================================================
+   FAQ
+===================================================== */
+
+document.querySelectorAll(
+    ".faq-question"
+).forEach(
+    function(button) {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                const item =
+                    button.closest(
+                        ".faq-item"
+                    );
+
+                if (!item) return;
+
+
+                const answer =
+                    item.querySelector(
+                        ".faq-answer"
+                    );
+
+
+                const isActive =
+                    item.classList.contains(
+                        "active"
+                    );
+
+
+                document
+                    .querySelectorAll(
+                        ".faq-item.active"
+                    )
+                    .forEach(
+                        function(activeItem) {
+
+                            if (
+                                activeItem !== item
+                            ) {
+
+                                activeItem
+                                    .classList
+                                    .remove(
+                                        "active"
+                                    );
+
+                                const activeAnswer =
+                                    activeItem.querySelector(
+                                        ".faq-answer"
+                                    );
+
+                                if (activeAnswer) {
+
+                                    activeAnswer.style
+                                        .maxHeight = null;
+
+                                }
+
+                            }
+
+                        }
+                    );
+
+
+                item.classList.toggle(
+                    "active",
+                    !isActive
+                );
+
+
+                if (!isActive) {
+
+                    answer.style.maxHeight =
+                        answer.scrollHeight +
+                        "px";
+
+                } else {
+
+                    answer.style.maxHeight =
+                        null;
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
+   REGISTER ROLE
+===================================================== */
+
+function showRegister(role) {
+
+    const modal =
+        document.getElementById(
+            "register-modal"
+        );
+
+
+    if (!modal) return;
+
+
+    modal.classList.add("show");
+
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    if (role) {
+
+        const roleSelect =
+            document.getElementById(
+                "register-role"
+            );
+
+
+        if (roleSelect) {
+
+            roleSelect.value =
+                role;
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function showLogin() {
+
+    const modal =
+        document.getElementById(
+            "login-modal"
+        );
+
+
+    if (!modal) return;
+
+
+    modal.classList.add("show");
+
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal(id) {
+
+    const modal =
+        document.getElementById(id);
+
+
+    if (!modal) return;
+
+
+    modal.classList.remove(
+        "show"
+    );
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* =====================================================
+   CLICK MODAL ESCAPE
+===================================================== */
+
+document.querySelectorAll(
+    ".modal"
+).forEach(
+    function(modal) {
+
+        modal.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === modal
+                ) {
+
+                    closeModal(
+                        modal.id
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(message) {
+
+    const container =
+        document.getElementById(
+            "toast-container"
+        );
+
+
+    if (!container) return;
+
+
+    const toast =
+        document.createElement(
+            "div"
+        );
+
+
+    toast.className =
+        "toast";
+
+
+    toast.textContent =
+        message;
+
+
+    container.appendChild(
+        toast
+    );
+
+
+    setTimeout(
+        function() {
+
+            toast.remove();
+
+        },
+        3500
+    );
+
+}
+
+
+{% if messages %}
+
+    {% for message in messages %}
+
+        showToast(
+            "{{ message|escapejs }}"
+        );
+
+    {% endfor %}
+
+{% endif %}
+
+
+/* =====================================================
+   REGISTER PASSWORD VALIDATION
+===================================================== */
+
+const registerForm =
+    document.querySelector(
+        '#register-modal form'
+    );
+
+
+if (registerForm) {
+
+    registerForm.addEventListener(
+        "submit",
+        function(event) {
+
+            const password =
+                registerForm.querySelector(
+                    '[name="password"]'
+                );
+
+            const confirmPassword =
+                registerForm.querySelector(
+                    '[name="confirm_password"]'
+                );
+
+
+            if (
+                password &&
+                confirmPassword &&
+                password.value !==
+                confirmPassword.value
+            ) {
+
+                event.preventDefault();
+
+
+                showToast(
+                    "Passwords do not match."
+                );
+
+
+                confirmPassword.focus();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   INITIAL KEYBOARD ACCESS
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter" &&
+            event.target.matches(
+                ".faq-question"
+            )
+        ) {
+
+            event.target.click();
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

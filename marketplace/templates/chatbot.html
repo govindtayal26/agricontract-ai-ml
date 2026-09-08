@@ -1,0 +1,2336 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <!-- =====================================================
+         SEO
+    ====================================================== -->
+
+    <title>
+        Jarvis AI Farming Assistant | AgriContract
+    </title>
+
+    <meta
+        name="description"
+        content="Ask Jarvis AI about farming, crops, agricultural markets, crop diseases, farming practices and agricultural contracts."
+    >
+
+    <meta
+        name="keywords"
+        content="AI farming assistant, agriculture AI, farming chatbot, crop assistant, agricultural chatbot, AgriContract, Jarvis AI"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <meta
+        name="author"
+        content="AgriContract"
+    >
+
+    <link
+        rel="canonical"
+        href="{{ request.build_absolute_uri }}"
+    >
+
+
+    <!-- Open Graph -->
+
+    <meta
+        property="og:title"
+        content="Jarvis AI Farming Assistant | AgriContract"
+    >
+
+    <meta
+        property="og:description"
+        content="Your AI-powered farming assistant for agricultural questions, crops, markets and farming knowledge."
+    >
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+
+    <!-- Theme -->
+
+    <meta
+        name="theme-color"
+        content="#0f172a"
+    >
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            min-height: 100vh;
+
+            color: #e5e7eb;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(34,197,94,0.12),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(59,130,246,0.10),
+                    transparent 30%
+                ),
+                #020617;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        .app {
+
+            width: 100%;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+
+            width: 100%;
+
+            height: 70px;
+
+            background:
+                rgba(15,23,42,0.90);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
+
+            display: flex;
+
+            align-items: center;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+        }
+
+
+        .nav-inner {
+
+            width: 100%;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 0 22px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 20px;
+
+            font-weight: 800;
+        }
+
+
+        .brand-icon {
+
+            width: 39px;
+
+            height: 39px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #16a34a,
+                    #22c55e
+                );
+
+            box-shadow:
+                0 8px 20px
+                rgba(34,197,94,0.20);
+        }
+
+
+        .back-link {
+
+            color: #cbd5e1;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            transition: 0.2s;
+        }
+
+
+        .back-link:hover {
+
+            background:
+                rgba(255,255,255,0.07);
+
+            color: white;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+
+            width: 100%;
+
+            flex: 1;
+
+            padding:
+                35px 18px 45px;
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 850px;
+
+            margin: auto;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .ai-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 7px 13px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(34,197,94,0.10);
+
+            border:
+                1px solid
+                rgba(34,197,94,0.20);
+
+            color: #86efac;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            margin-bottom: 14px;
+        }
+
+
+        .status-dot {
+
+            width: 7px;
+
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(34,197,94,0.10);
+        }
+
+
+        .hero h1 {
+
+            font-size:
+                clamp(28px, 5vw, 42px);
+
+            line-height: 1.15;
+
+            color: white;
+
+            margin-bottom: 9px;
+
+            letter-spacing: -0.5px;
+        }
+
+
+        .hero h1 span {
+
+            color: #4ade80;
+        }
+
+
+        .hero p {
+
+            color: #94a3b8;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            max-width: 600px;
+
+            margin: auto;
+        }
+
+
+        /* =====================================================
+           CHAT CARD
+        ===================================================== */
+
+        .chat-card {
+
+            width: 100%;
+
+            height: 650px;
+
+            min-height: 500px;
+
+            background:
+                rgba(15,23,42,0.88);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius: 22px;
+
+            overflow: hidden;
+
+            display: flex;
+
+            flex-direction: column;
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,0.35);
+        }
+
+
+        /* =====================================================
+           CHAT HEADER
+        ===================================================== */
+
+        .chat-header {
+
+            min-height: 70px;
+
+            padding: 12px 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 12px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            background:
+                rgba(15,23,42,0.95);
+        }
+
+
+        .assistant-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            min-width: 0;
+        }
+
+
+        .assistant-avatar {
+
+            width: 43px;
+
+            height: 43px;
+
+            min-width: 43px;
+
+            border-radius: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 23px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #166534,
+                    #22c55e
+                );
+
+            box-shadow:
+                0 7px 20px
+                rgba(34,197,94,0.18);
+        }
+
+
+        .assistant-name {
+
+            min-width: 0;
+        }
+
+
+        .assistant-name h2 {
+
+            color: white;
+
+            font-size: 15px;
+
+            margin-bottom: 3px;
+        }
+
+
+        .assistant-name p {
+
+            color: #64748b;
+
+            font-size: 10px;
+        }
+
+
+        .ai-status {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            color: #86efac;
+
+            font-size: 10px;
+
+            white-space: nowrap;
+        }
+
+
+        .ai-status-dot {
+
+            width: 7px;
+
+            height: 7px;
+
+            background: #22c55e;
+
+            border-radius: 50%;
+        }
+
+
+        /* =====================================================
+           CHAT MESSAGES
+        ===================================================== */
+
+        .chat {
+
+            flex: 1;
+
+            min-height: 0;
+
+            overflow-y: auto;
+
+            padding: 22px;
+
+            scroll-behavior: smooth;
+        }
+
+
+        .chat::-webkit-scrollbar {
+
+            width: 6px;
+        }
+
+
+        .chat::-webkit-scrollbar-track {
+
+            background: transparent;
+        }
+
+
+        .chat::-webkit-scrollbar-thumb {
+
+            background: #334155;
+
+            border-radius: 20px;
+        }
+
+
+        /* =====================================================
+           WELCOME MESSAGE
+        ===================================================== */
+
+        .welcome-message {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .welcome-icon {
+
+            width: 34px;
+
+            height: 34px;
+
+            min-width: 34px;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(34,197,94,0.10);
+
+            border:
+                1px solid
+                rgba(34,197,94,0.15);
+        }
+
+
+        .welcome-content {
+
+            max-width: 80%;
+        }
+
+
+        .welcome-content p {
+
+            background: #1e293b;
+
+            color: #dbe4e0;
+
+            padding: 12px 14px;
+
+            border-radius: 5px 15px 15px 15px;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.05);
+        }
+
+
+        /* =====================================================
+           USER / AI MESSAGE
+        ===================================================== */
+
+        .message {
+
+            display: flex;
+
+            margin-bottom: 15px;
+
+            width: 100%;
+        }
+
+
+        .message.user {
+
+            justify-content: flex-end;
+        }
+
+
+        .message.ai {
+
+            justify-content: flex-start;
+        }
+
+
+        .message-content {
+
+            max-width: 75%;
+
+            min-width: 0;
+        }
+
+
+        .message-label {
+
+            font-size: 10px;
+
+            color: #64748b;
+
+            margin-bottom: 5px;
+
+            padding: 0 4px;
+
+            font-weight: 600;
+        }
+
+
+        .user .message-label {
+
+            text-align: right;
+        }
+
+
+        .bubble {
+
+            padding: 11px 14px;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            overflow-wrap: anywhere;
+
+            word-break: break-word;
+        }
+
+
+        .user .bubble {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #166534,
+                    #22c55e
+                );
+
+            color: white;
+
+            border-radius:
+                15px 15px 5px 15px;
+
+            box-shadow:
+                0 5px 15px
+                rgba(34,197,94,0.13);
+        }
+
+
+        .ai .bubble {
+
+            background: #1e293b;
+
+            color: #dbe4e0;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            border-radius:
+                5px 15px 15px 15px;
+        }
+
+
+        /* =====================================================
+           INPUT AREA
+        ===================================================== */
+
+        .input-area {
+
+            padding: 13px 16px 14px;
+
+            background:
+                rgba(15,23,42,0.98);
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.07);
+        }
+
+
+        .input-form {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+        }
+
+
+        .input-wrapper {
+
+            flex: 1;
+
+            min-width: 0;
+
+            position: relative;
+        }
+
+
+        #msg {
+
+            width: 100%;
+
+            height: 48px;
+
+            border-radius: 13px;
+
+            border:
+                1px solid #334155;
+
+            background: #0f172a;
+
+            color: white;
+
+            outline: none;
+
+            padding: 0 14px;
+
+            font-size: 14px;
+
+            font-family: inherit;
+
+            transition: 0.2s;
+        }
+
+
+        #msg:focus {
+
+            border-color: #22c55e;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(34,197,94,0.08);
+        }
+
+
+        #msg::placeholder {
+
+            color: #64748b;
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .voice-btn,
+        .send-btn {
+
+            height: 48px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition: 0.2s;
+
+            touch-action: manipulation;
+        }
+
+
+        .voice-btn {
+
+            width: 48px;
+
+            min-width: 48px;
+
+            background: #1e293b;
+
+            border:
+                1px solid #334155;
+
+            color: #cbd5e1;
+
+            font-size: 18px;
+        }
+
+
+        .voice-btn:hover {
+
+            background: #334155;
+
+            color: white;
+        }
+
+
+        .voice-btn.listening {
+
+            background:
+                rgba(239,68,68,0.15);
+
+            border-color:
+                rgba(239,68,68,0.40);
+
+            color: #f87171;
+
+            animation: pulse 1s infinite;
+        }
+
+
+        @keyframes pulse {
+
+            0% {
+                box-shadow:
+                    0 0 0 0
+                    rgba(239,68,68,0.25);
+            }
+
+            70% {
+                box-shadow:
+                    0 0 0 8px
+                    rgba(239,68,68,0);
+            }
+
+            100% {
+                box-shadow:
+                    0 0 0 0
+                    rgba(239,68,68,0);
+            }
+        }
+
+
+        .send-btn {
+
+            min-width: 85px;
+
+            padding: 0 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #15803d,
+                    #22c55e
+                );
+
+            color: white;
+
+            font-weight: 700;
+
+            font-size: 13px;
+
+            gap: 6px;
+
+            box-shadow:
+                0 6px 15px
+                rgba(34,197,94,0.13);
+        }
+
+
+        .send-btn:hover {
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 9px 18px
+                rgba(34,197,94,0.18);
+        }
+
+
+        .send-btn:active,
+        .voice-btn:active {
+
+            transform: scale(0.96);
+        }
+
+
+        .input-hint {
+
+            color: #475569;
+
+            font-size: 9px;
+
+            padding:
+                7px 3px 0;
+        }
+
+
+        /* =====================================================
+           QUICK QUESTIONS
+        ===================================================== */
+
+        .quick-section {
+
+            margin-top: 18px;
+        }
+
+
+        .quick-title {
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            margin-bottom: 9px;
+
+            text-align: center;
+        }
+
+
+        .quick-buttons {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 7px;
+        }
+
+
+        .quick-btn {
+
+            border:
+                1px solid #334155;
+
+            background:
+                rgba(15,23,42,0.8);
+
+            color: #94a3b8;
+
+            padding: 8px 11px;
+
+            border-radius: 999px;
+
+            font-size: 10px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .quick-btn:hover {
+
+            border-color: #22c55e;
+
+            color: #86efac;
+
+            background:
+                rgba(34,197,94,0.06);
+        }
+
+
+        /* =====================================================
+           FEATURES
+        ===================================================== */
+
+        .features {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+
+            margin-top: 25px;
+        }
+
+
+        .feature {
+
+            padding: 16px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            border-radius: 13px;
+
+            background:
+                rgba(15,23,42,0.65);
+
+            text-align: center;
+        }
+
+
+        .feature-icon {
+
+            font-size: 22px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .feature h3 {
+
+            color: #e2e8f0;
+
+            font-size: 12px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .feature p {
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+
+                height: 62px;
+            }
+
+
+            .nav-inner {
+
+                padding: 0 13px;
+            }
+
+
+            .brand {
+
+                font-size: 17px;
+            }
+
+
+            .brand-icon {
+
+                width: 34px;
+
+                height: 34px;
+
+                border-radius: 9px;
+            }
+
+
+            .back-link {
+
+                font-size: 11px;
+
+                padding: 8px 9px;
+            }
+
+
+            .main {
+
+                padding:
+                    20px 9px
+                    calc(15px + env(safe-area-inset-bottom));
+            }
+
+
+            .hero {
+
+                margin-bottom: 17px;
+            }
+
+
+            .ai-badge {
+
+                font-size: 9px;
+
+                padding: 6px 10px;
+
+                margin-bottom: 10px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 27px;
+
+                letter-spacing: 0;
+            }
+
+
+            .hero p {
+
+                font-size: 11px;
+
+                padding: 0 8px;
+
+                line-height: 1.6;
+            }
+
+
+            /* Full screen chat */
+
+            .chat-card {
+
+                height:
+                    calc(100vh - 155px);
+
+                min-height: 470px;
+
+                border-radius: 17px;
+            }
+
+
+            .chat-header {
+
+                min-height: 62px;
+
+                padding: 9px 12px;
+            }
+
+
+            .assistant-avatar {
+
+                width: 38px;
+
+                height: 38px;
+
+                min-width: 38px;
+
+                font-size: 20px;
+
+                border-radius: 11px;
+            }
+
+
+            .assistant-name h2 {
+
+                font-size: 13px;
+            }
+
+
+            .assistant-name p {
+
+                font-size: 9px;
+            }
+
+
+            .ai-status {
+
+                display: none;
+            }
+
+
+            .chat {
+
+                padding: 15px 10px;
+            }
+
+
+            .message-content {
+
+                max-width: 85%;
+            }
+
+
+            .bubble {
+
+                font-size: 12.5px;
+
+                padding: 9px 11px;
+
+                line-height: 1.55;
+            }
+
+
+            .message-label {
+
+                font-size: 9px;
+            }
+
+
+            .welcome-content {
+
+                max-width: 88%;
+            }
+
+
+            .welcome-content p {
+
+                font-size: 12px;
+
+                padding: 10px 11px;
+            }
+
+
+            .input-area {
+
+                padding:
+                    9px 9px
+                    max(9px, env(safe-area-inset-bottom));
+            }
+
+
+            .input-form {
+
+                gap: 6px;
+            }
+
+
+            #msg {
+
+                height: 45px;
+
+                font-size: 16px;
+
+                padding: 0 11px;
+
+                border-radius: 12px;
+            }
+
+
+            /*
+               16px prevents mobile browser
+               auto-zoom on the input.
+            */
+
+
+            .voice-btn,
+            .send-btn {
+
+                height: 45px;
+
+                border-radius: 12px;
+            }
+
+
+            .voice-btn {
+
+                width: 45px;
+
+                min-width: 45px;
+
+                font-size: 17px;
+            }
+
+
+            .send-btn {
+
+                width: 45px;
+
+                min-width: 45px;
+
+                padding: 0;
+
+                font-size: 17px;
+            }
+
+
+            .send-text {
+
+                display: none;
+            }
+
+
+            .input-hint {
+
+                display: none;
+            }
+
+
+            .quick-section {
+
+                margin-top: 12px;
+            }
+
+
+            .quick-title {
+
+                font-size: 9px;
+
+                margin-bottom: 6px;
+            }
+
+
+            .quick-buttons {
+
+                gap: 5px;
+
+                flex-wrap: nowrap;
+
+                overflow-x: auto;
+
+                justify-content: flex-start;
+
+                padding-bottom: 3px;
+            }
+
+
+            .quick-buttons::-webkit-scrollbar {
+
+                display: none;
+            }
+
+
+            .quick-btn {
+
+                flex-shrink: 0;
+
+                font-size: 9px;
+
+                padding: 7px 9px;
+            }
+
+
+            .features {
+
+                display: none;
+            }
+
+        }
+
+
+        /* =====================================================
+           SMALL PHONES
+        ===================================================== */
+
+        @media (max-width: 380px) {
+
+            .hero h1 {
+
+                font-size: 24px;
+            }
+
+
+            .hero p {
+
+                font-size: 10px;
+            }
+
+
+            .chat-card {
+
+                height:
+                    calc(100vh - 140px);
+            }
+
+
+            .chat-title {
+
+                max-width: 150px;
+            }
+
+
+            .bubble {
+
+                font-size: 12px;
+            }
+
+        }
+
+
+        /* =====================================================
+           VERY SMALL PHONES
+        ===================================================== */
+
+        @media (max-width: 320px) {
+
+            .brand {
+
+                font-size: 15px;
+            }
+
+
+            .back-link {
+
+                font-size: 10px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 22px;
+            }
+
+
+            .assistant-name h2 {
+
+                font-size: 12px;
+            }
+
+
+            .assistant-name p {
+
+                display: none;
+            }
+
+        }
+
+
+        /* =====================================================
+           DESKTOP
+        ===================================================== */
+
+        @media (min-width: 601px) {
+
+            .chat-card {
+
+                min-height: 600px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="navbar">
+
+        <div class="nav-inner">
+
+
+            <a
+                href="{% url 'home' %}"
+                class="brand"
+            >
+
+                <span class="brand-icon">
+                    🌾
+                </span>
+
+                <span>
+                    AgriContract
+                </span>
+
+            </a>
+
+
+            <a
+                href="{% url 'home' %}"
+                class="back-link"
+            >
+
+                ← Back to Marketplace
+
+            </a>
+
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main">
+
+
+        <div class="container">
+
+
+            <!-- HERO -->
+
+            <section class="hero">
+
+
+                <div class="ai-badge">
+
+                    <span class="status-dot"></span>
+
+                    AI FARMING ASSISTANT
+
+                </div>
+
+
+                <h1>
+
+                    Meet
+                    <span>Jarvis AI</span>
+
+                </h1>
+
+
+                <p>
+
+                    Your intelligent farming assistant.
+                    Ask questions about crops, agriculture,
+                    markets, farming practices and more.
+
+                </p>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 CHAT
+            ================================================== -->
+
+            <section class="chat-card">
+
+
+                <!-- CHAT HEADER -->
+
+                <header class="chat-header">
+
+
+                    <div class="assistant-info">
+
+
+                        <div class="assistant-avatar">
+                            🤖
+                        </div>
+
+
+                        <div class="assistant-name">
+
+                            <h2>
+                                Jarvis Farming Assistant
+                            </h2>
+
+                            <p>
+                                AI-powered agricultural assistant
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="ai-status">
+
+                        <span class="ai-status-dot"></span>
+
+                        AI Online
+
+                    </div>
+
+
+                </header>
+
+
+
+                <!-- =================================================
+                     MESSAGES
+                ================================================== -->
+
+                <div
+                    id="chat"
+                    class="chat"
+                >
+
+
+                    <!-- WELCOME -->
+
+                    <div class="welcome-message">
+
+
+                        <div class="welcome-icon">
+                            🌱
+                        </div>
+
+
+                        <div class="welcome-content">
+
+                            <p>
+
+                                👋 Hello! I'm Jarvis, your
+                                AI farming assistant.
+
+                                <br><br>
+
+                                You can ask me about crops,
+                                farming techniques, agricultural
+                                markets, crop diseases and
+                                other farming-related topics.
+
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     INPUT
+                ================================================== -->
+
+                <div class="input-area">
+
+
+                    <form
+                        class="input-form"
+                        id="messageForm"
+                        onsubmit="event.preventDefault(); sendMsg();"
+                    >
+
+
+                        <div class="input-wrapper">
+
+                            <input
+                                id="msg"
+                                name="message"
+                                type="text"
+                                placeholder="Ask Jarvis about farming..."
+                                autocomplete="off"
+                                maxlength="1000"
+                                aria-label="Ask Jarvis a question"
+                                required
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="voice-btn"
+                            id="voiceBtn"
+                            onclick="startVoice()"
+                            aria-label="Voice input"
+                            title="Voice input"
+                        >
+
+                            🎤
+
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="send-btn"
+                            aria-label="Send message"
+                        >
+
+                            <span>
+                                ➤
+                            </span>
+
+                            <span class="send-text">
+                                Send
+                            </span>
+
+                        </button>
+
+
+                    </form>
+
+
+                    <div class="input-hint">
+
+                        🎤 Tap microphone for voice input
+                        • Press Enter to send
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 QUICK QUESTIONS
+            ================================================== -->
+
+            <section class="quick-section">
+
+
+                <div class="quick-title">
+                    Try asking Jarvis
+                </div>
+
+
+                <div class="quick-buttons">
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="askQuestion('How can I improve wheat production?')"
+                    >
+                        🌾 Wheat production
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="askQuestion('How can I identify crop diseases?')"
+                    >
+                        🌱 Crop diseases
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="askQuestion('What are good farming practices?')"
+                    >
+                        🚜 Farming practices
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        onclick="askQuestion('How can I improve crop yield?')"
+                    >
+                        📈 Improve yield
+                    </button>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 FEATURES
+            ================================================== -->
+
+            <section class="features">
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🧠
+                    </div>
+
+                    <h3>
+                        AI Powered
+                    </h3>
+
+                    <p>
+                        Get intelligent responses
+                        to farming questions.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🎤
+                    </div>
+
+                    <h3>
+                        Voice Assistant
+                    </h3>
+
+                    <p>
+                        Ask questions using
+                        your voice.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🌾
+                    </div>
+
+                    <h3>
+                        Agriculture Focused
+                    </h3>
+
+                    <p>
+                        Designed specifically
+                        for farming use cases.
+                    </p>
+
+                </div>
+
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   ADD MESSAGE
+========================================================= */
+
+function addMessage(text, sender) {
+
+    const chat =
+        document.getElementById("chat");
+
+
+    const wrapper =
+        document.createElement("div");
+
+
+    const content =
+        document.createElement("div");
+
+
+    const label =
+        document.createElement("div");
+
+
+    const bubble =
+        document.createElement("div");
+
+
+    if (sender === "You") {
+
+        wrapper.className =
+            "message user";
+
+    } else {
+
+        wrapper.className =
+            "message ai";
+    }
+
+
+    content.className =
+        "message-content";
+
+
+    label.className =
+        "message-label";
+
+
+    bubble.className =
+        "bubble";
+
+
+    label.textContent =
+        sender;
+
+
+    /*
+       textContent is intentionally used
+       instead of innerHTML so that AI/user
+       text cannot inject HTML/JavaScript.
+    */
+
+    bubble.textContent =
+        text;
+
+
+    content.appendChild(label);
+
+    content.appendChild(bubble);
+
+    wrapper.appendChild(content);
+
+    chat.appendChild(wrapper);
+
+
+    chat.scrollTop =
+        chat.scrollHeight;
+}
+
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+async function sendMsg() {
+
+    const input =
+        document.getElementById("msg");
+
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) {
+        return;
+    }
+
+
+    addMessage(
+        message,
+        "You"
+    );
+
+
+    input.value = "";
+
+
+    input.disabled = true;
+
+
+    const sendButton =
+        document.querySelector(".send-btn");
+
+
+    sendButton.disabled = true;
+
+
+    const typing =
+        document.createElement("div");
+
+
+    typing.className =
+        "message ai";
+
+
+    typing.id =
+        "typing";
+
+
+    typing.innerHTML = `
+        <div class="message-content">
+            <div class="message-label">
+                Jarvis
+            </div>
+
+            <div class="bubble">
+                🤔 Thinking...
+            </div>
+        </div>
+    `;
+
+
+    document
+        .getElementById("chat")
+        .appendChild(typing);
+
+
+    document
+        .getElementById("chat")
+        .scrollTop =
+            document
+            .getElementById("chat")
+            .scrollHeight;
+
+
+    try {
+
+        const csrfToken =
+            "{{ csrf_token }}";
+
+
+        const response =
+            await fetch(
+                "/ai-chatbot/",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/x-www-form-urlencoded",
+
+                        "X-CSRFToken":
+                            csrfToken
+                    },
+
+                    body:
+                        "message=" +
+                        encodeURIComponent(message)
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Server error: " +
+                response.status
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const typingElement =
+            document.getElementById(
+                "typing"
+            );
+
+
+        if (typingElement) {
+
+            typingElement.remove();
+
+        }
+
+
+        const reply =
+            data.reply ||
+            "Sorry, I couldn't generate a response.";
+
+
+        addMessage(
+            reply,
+            "Jarvis"
+        );
+
+
+        speak(reply);
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        const typingElement =
+            document.getElementById(
+                "typing"
+            );
+
+
+        if (typingElement) {
+
+            typingElement.remove();
+
+        }
+
+
+        addMessage(
+            "Sorry, something went wrong. Please try again.",
+            "Jarvis"
+        );
+
+    }
+
+
+    input.disabled = false;
+
+    sendButton.disabled = false;
+
+    input.focus();
+}
+
+
+
+/* =========================================================
+   QUICK QUESTION
+========================================================= */
+
+function askQuestion(question) {
+
+    const input =
+        document.getElementById("msg");
+
+
+    input.value =
+        question;
+
+
+    sendMsg();
+
+}
+
+
+
+/* =========================================================
+   VOICE INPUT
+========================================================= */
+
+function startVoice() {
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if (!SpeechRecognition) {
+
+        alert(
+            "Voice recognition is not supported by this browser. Please use Chrome or Edge."
+        );
+
+        return;
+    }
+
+
+    const recognition =
+        new SpeechRecognition();
+
+
+    recognition.lang =
+        "en-IN";
+
+
+    recognition.continuous =
+        false;
+
+
+    recognition.interimResults =
+        false;
+
+
+    const voiceButton =
+        document.getElementById(
+            "voiceBtn"
+        );
+
+
+    voiceButton.classList.add(
+        "listening"
+    );
+
+
+    voiceButton.textContent =
+        "🔴";
+
+
+    recognition.onresult =
+        function(event) {
+
+            const text =
+                event
+                    .results[0][0]
+                    .transcript;
+
+
+            document
+                .getElementById("msg")
+                .value = text;
+
+
+            sendMsg();
+
+        };
+
+
+    recognition.onerror =
+        function(event) {
+
+            console.error(
+                "Voice recognition error:",
+                event.error
+            );
+
+        };
+
+
+    recognition.onend =
+        function() {
+
+            voiceButton
+                .classList
+                .remove("listening");
+
+
+            voiceButton.textContent =
+                "🎤";
+
+        };
+
+
+    recognition.start();
+
+}
+
+
+
+/* =========================================================
+   TEXT TO SPEECH
+========================================================= */
+
+function speak(text) {
+
+    if (
+        !("speechSynthesis" in window)
+    ) {
+
+        return;
+
+    }
+
+
+    window.speechSynthesis.cancel();
+
+
+    const speech =
+        new SpeechSynthesisUtterance(
+            text
+        );
+
+
+    speech.lang =
+        "en-IN";
+
+
+    speech.rate =
+        0.95;
+
+
+    speech.pitch =
+        1;
+
+
+    window.speechSynthesis.speak(
+        speech
+    );
+
+}
+
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+document
+    .getElementById("msg")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                sendMsg();
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

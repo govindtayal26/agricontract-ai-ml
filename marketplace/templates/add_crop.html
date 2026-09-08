@@ -1,0 +1,1671 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add New Crop | AgriContract</title>
+
+    <meta name="description"
+          content="List your agricultural produce on AgriContract and connect directly with buyers.">
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+          rel="stylesheet">
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(34, 197, 94, 0.12),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(21, 128, 61, 0.10),
+            transparent 30%
+        ),
+        #f4f8f5;
+
+    color: #17251b;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+    width: 100%;
+
+    background: rgba(255, 255, 255, 0.95);
+
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid #e4ebe6;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+}
+
+.nav-inner {
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 17px 25px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    text-decoration: none;
+
+    color: #166534;
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    min-width: 0;
+}
+
+.brand-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    min-width: 40px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #15803d,
+            #22c55e
+        );
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    color: white;
+
+    font-size: 20px;
+
+    box-shadow:
+        0 6px 18px
+        rgba(21, 128, 61, 0.22);
+}
+
+.back-btn {
+
+    text-decoration: none;
+
+    color: #166534;
+
+    font-weight: 600;
+
+    font-size: 14px;
+
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    transition: 0.25s ease;
+
+    white-space: nowrap;
+}
+
+.back-btn:hover {
+    background: #ecfdf5;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page-wrapper {
+
+    width: 100%;
+
+    max-width: 1150px;
+
+    margin: 45px auto;
+
+    padding: 0 22px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+.badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
+
+    max-width: 100%;
+}
+
+.page-header h1 {
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: clamp(
+        32px,
+        5vw,
+        48px
+    );
+
+    color: #14532d;
+
+    margin-bottom: 10px;
+
+    line-height: 1.15;
+}
+
+.page-header p {
+
+    max-width: 620px;
+
+    margin: auto;
+
+    color: #64746a;
+
+    line-height: 1.7;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.content-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(280px, 0.85fr)
+        minmax(0, 1.35fr);
+
+    gap: 25px;
+
+    align-items: stretch;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.info-card,
+.form-card {
+
+    background:
+        rgba(255, 255, 255, 0.96);
+
+    border: 1px solid #e3ebe5;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 18px 50px
+        rgba(20, 83, 45, 0.08);
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   INFORMATION CARD
+========================================================= */
+
+.info-card {
+
+    padding: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(22, 101, 52, 0.97),
+            rgba(21, 128, 61, 0.94)
+        );
+
+    color: white;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.info-card::before {
+
+    content: "";
+
+    width: 220px;
+
+    height: 220px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    position: absolute;
+
+    right: -90px;
+
+    top: -80px;
+}
+
+.info-card::after {
+
+    content: "";
+
+    width: 160px;
+
+    height: 160px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    position: absolute;
+
+    left: -80px;
+
+    bottom: -70px;
+}
+
+.info-content {
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.info-icon {
+
+    width: 62px;
+
+    height: 62px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,0.15);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 30px;
+
+    margin-bottom: 22px;
+}
+
+.info-card h2 {
+
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 29px;
+
+    margin-bottom: 12px;
+
+    line-height: 1.2;
+}
+
+.info-card > .info-content > p {
+
+    color: #dcfce7;
+
+    line-height: 1.7;
+
+    font-size: 14px;
+
+    margin-bottom: 27px;
+}
+
+
+/* =========================================================
+   BENEFITS
+========================================================= */
+
+.benefit {
+
+    display: flex;
+
+    gap: 13px;
+
+    margin-bottom: 20px;
+
+    align-items: flex-start;
+}
+
+.benefit-icon {
+
+    width: 34px;
+
+    height: 34px;
+
+    min-width: 34px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,0.14);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+.benefit h4 {
+
+    font-size: 14px;
+
+    margin-bottom: 3px;
+}
+
+.benefit p {
+
+    color: #bbf7d0;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   SECURITY NOTE
+========================================================= */
+
+.secure-note {
+
+    margin-top: 28px;
+
+    padding: 14px;
+
+    background:
+        rgba(0,0,0,0.12);
+
+    border-radius: 13px;
+
+    font-size: 12px;
+
+    color: #dcfce7;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.form-card {
+
+    padding: 35px;
+
+    min-width: 0;
+}
+
+.form-title {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.form-title h2 {
+
+    font-size: 21px;
+
+    color: #183b25;
+}
+
+.required-note {
+
+    color: #849189;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   DJANGO FORM
+========================================================= */
+
+.form-container {
+
+    width: 100%;
+}
+
+.form-container p {
+
+    margin-bottom: 18px;
+
+    width: 100%;
+}
+
+.form-container label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #304238;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    line-height: 1.4;
+}
+
+.form-container input,
+.form-container select,
+.form-container textarea {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    border: 1px solid #d7e1da;
+
+    background: #fbfdfb;
+
+    color: #17251b;
+
+    border-radius: 11px;
+
+    padding: 13px 14px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.form-container input:focus,
+.form-container select:focus,
+.form-container textarea:focus {
+
+    border-color: #22c55e;
+
+    background: white;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(34, 197, 94, 0.10);
+}
+
+.form-container textarea {
+
+    min-height: 110px;
+
+    resize: vertical;
+}
+
+
+/* =========================================================
+   FILE INPUT
+========================================================= */
+
+.form-container input[type="file"] {
+
+    padding: 9px;
+
+    cursor: pointer;
+
+    background: #f8faf8;
+
+    overflow: hidden;
+}
+
+.form-container input[type="file"]::file-selector-button {
+
+    border: none;
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    padding: 8px 12px;
+
+    border-radius: 8px;
+
+    margin-right: 10px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   HELP TEXT
+========================================================= */
+
+.form-container .helptext {
+
+    display: block;
+
+    color: #7a887f;
+
+    font-size: 11px;
+
+    margin-top: 6px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ERRORS
+========================================================= */
+
+.form-container ul.errorlist {
+
+    list-style: none;
+
+    padding: 0;
+
+    margin: 5px 0 8px;
+
+    color: #dc2626;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+.submit-btn {
+
+    width: 100%;
+
+    min-height: 50px;
+
+    border: none;
+
+    padding: 15px 20px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #15803d,
+            #22c55e
+        );
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 24px
+        rgba(21, 128, 61, 0.22);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+    touch-action: manipulation;
+}
+
+.submit-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 14px 28px
+        rgba(21, 128, 61, 0.28);
+}
+
+.submit-btn:active {
+
+    transform: translateY(0);
+
+}
+
+
+/* =========================================================
+   FOOTER ACTIONS
+========================================================= */
+
+.form-footer {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 20px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #edf1ee;
+}
+
+.form-footer span {
+
+    color: #8a958e;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+.cancel-link {
+
+    text-decoration: none;
+
+    color: #536259;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: 0.2s ease;
+
+    white-space: nowrap;
+}
+
+.cancel-link:hover {
+
+    color: #15803d;
+}
+
+
+/* =========================================================
+   TIPS
+========================================================= */
+
+.tips {
+
+    width: 100%;
+
+    max-width: 1150px;
+
+    margin: 28px auto 40px;
+
+    padding: 0 22px;
+}
+
+.tips-box {
+
+    background: white;
+
+    border: 1px solid #e5ece7;
+
+    border-radius: 17px;
+
+    padding: 20px 24px;
+
+    display: flex;
+
+    gap: 15px;
+
+    align-items: center;
+
+    box-shadow:
+        0 8px 25px
+        rgba(20, 83, 45, 0.05);
+}
+
+.tips-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    min-width: 40px;
+
+    border-radius: 11px;
+
+    background: #fef9c3;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 19px;
+}
+
+.tips-box h4 {
+
+    font-size: 13px;
+
+    color: #304238;
+
+    margin-bottom: 3px;
+}
+
+.tips-box p {
+
+    color: #758078;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+    .content-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+    .info-card {
+
+        order: 2;
+    }
+
+    .form-card {
+
+        order: 1;
+    }
+
+    .page-wrapper {
+
+        margin-top: 35px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+
+        background:
+            radial-gradient(
+                circle at 10% 10%,
+                rgba(34, 197, 94, 0.08),
+                transparent 30%
+            ),
+            #f4f8f5;
+    }
+
+
+    /* NAVBAR */
+
+    .nav-inner {
+
+        padding: 12px 15px;
+
+        gap: 8px;
+    }
+
+    .brand {
+
+        font-size: 18px;
+
+        gap: 7px;
+    }
+
+    .brand-icon {
+
+        width: 35px;
+
+        height: 35px;
+
+        min-width: 35px;
+
+        border-radius: 10px;
+
+        font-size: 17px;
+    }
+
+    .back-btn {
+
+        font-size: 12px;
+
+        padding: 8px 9px;
+
+        border-radius: 8px;
+    }
+
+
+    /* PAGE */
+
+    .page-wrapper {
+
+        margin: 25px auto;
+
+        padding: 0 14px;
+    }
+
+    .page-header {
+
+        margin-bottom: 25px;
+    }
+
+    .badge {
+
+        font-size: 10px;
+
+        padding: 7px 11px;
+    }
+
+    .page-header h1 {
+
+        font-size: 34px;
+
+        line-height: 1.15;
+    }
+
+    .page-header p {
+
+        font-size: 13px;
+
+        line-height: 1.6;
+    }
+
+
+    /* FORM */
+
+    .form-card {
+
+        padding: 21px;
+
+        border-radius: 17px;
+    }
+
+    .form-title {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 5px;
+
+        margin-bottom: 20px;
+    }
+
+    .form-title h2 {
+
+        font-size: 19px;
+    }
+
+    .required-note {
+
+        font-size: 10px;
+    }
+
+
+    /* INPUTS */
+
+    .form-container input,
+    .form-container select,
+    .form-container textarea {
+
+        font-size: 16px;
+
+        padding: 13px;
+
+        border-radius: 10px;
+    }
+
+    /*
+       16px prevents mobile browsers,
+       especially iPhone Safari,
+       from zooming into form inputs.
+    */
+
+    .form-container textarea {
+
+        min-height: 120px;
+    }
+
+
+    /* BUTTON */
+
+    .submit-btn {
+
+        min-height: 50px;
+
+        font-size: 14px;
+
+        border-radius: 11px;
+    }
+
+
+    /* FOOTER */
+
+    .form-footer {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 10px;
+    }
+
+
+    /* INFO CARD */
+
+    .info-card {
+
+        padding: 23px;
+
+        border-radius: 17px;
+    }
+
+    .info-icon {
+
+        width: 52px;
+
+        height: 52px;
+
+        font-size: 25px;
+
+        border-radius: 15px;
+
+        margin-bottom: 18px;
+    }
+
+    .info-card h2 {
+
+        font-size: 25px;
+    }
+
+    .info-card > .info-content > p {
+
+        font-size: 13px;
+
+        margin-bottom: 22px;
+    }
+
+    .benefit {
+
+        gap: 10px;
+
+        margin-bottom: 17px;
+    }
+
+    .benefit-icon {
+
+        width: 31px;
+
+        height: 31px;
+
+        min-width: 31px;
+    }
+
+    .benefit h4 {
+
+        font-size: 13px;
+    }
+
+    .benefit p {
+
+        font-size: 11px;
+    }
+
+    .secure-note {
+
+        margin-top: 22px;
+
+        font-size: 11px;
+    }
+
+
+    /* TIPS */
+
+    .tips {
+
+        padding: 0 14px;
+
+        margin-top: 20px;
+
+        margin-bottom: 25px;
+    }
+
+    .tips-box {
+
+        padding: 17px;
+
+        align-items: flex-start;
+
+        border-radius: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .nav-inner {
+
+        padding: 11px 12px;
+    }
+
+    .brand {
+
+        font-size: 16px;
+    }
+
+    .brand-icon {
+
+        width: 32px;
+
+        height: 32px;
+
+        min-width: 32px;
+
+        font-size: 15px;
+    }
+
+    .back-btn {
+
+        font-size: 11px;
+
+        padding: 7px 8px;
+    }
+
+
+    .page-wrapper {
+
+        padding: 0 11px;
+
+        margin-top: 20px;
+    }
+
+    .page-header h1 {
+
+        font-size: 30px;
+    }
+
+    .page-header p {
+
+        font-size: 12px;
+    }
+
+
+    .form-card,
+    .info-card {
+
+        padding: 18px;
+
+        border-radius: 15px;
+    }
+
+    .form-container input,
+    .form-container select,
+    .form-container textarea {
+
+        padding: 12px;
+    }
+
+    .info-card h2 {
+
+        font-size: 23px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONE
+========================================================= */
+
+@media (max-width: 320px) {
+
+    .brand {
+
+        font-size: 14px;
+    }
+
+    .brand-icon {
+
+        width: 29px;
+
+        height: 29px;
+
+        min-width: 29px;
+
+        font-size: 13px;
+    }
+
+    .back-btn {
+
+        font-size: 10px;
+
+        padding: 6px 7px;
+    }
+
+    .page-header h1 {
+
+        font-size: 27px;
+    }
+
+    .form-card,
+    .info-card {
+
+        padding: 15px;
+    }
+
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+========================================================= */
+
+@media (hover: none) {
+
+    .submit-btn:hover {
+
+        transform: none;
+    }
+
+    .back-btn:hover {
+
+        background: transparent;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+button,
+a,
+input,
+select,
+textarea {
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="navbar">
+
+    <div class="nav-inner">
+
+        <a href="{% url 'home' %}" class="brand">
+
+            <span class="brand-icon">
+                🌾
+            </span>
+
+            <span>
+                AgriContract
+            </span>
+
+        </a>
+
+
+        <a href="{% url 'home' %}" class="back-btn">
+
+            ← Marketplace
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     MAIN PAGE
+====================================================== -->
+
+<main class="page-wrapper">
+
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+        <div class="badge">
+
+            🌱 FARMER MARKETPLACE
+
+        </div>
+
+
+        <h1>
+            List Your Produce
+        </h1>
+
+
+        <p>
+
+            Add your fresh agricultural produce to AgriContract
+            and connect with potential buyers through a simple
+            digital marketplace.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =================================================
+         CONTENT GRID
+    ================================================== -->
+
+    <div class="content-grid">
+
+
+        <!-- =================================================
+             INFORMATION CARD
+        ================================================== -->
+
+        <aside class="info-card">
+
+            <div class="info-content">
+
+
+                <div class="info-icon">
+                    🌾
+                </div>
+
+
+                <h2>
+                    Grow Your Marketplace
+                </h2>
+
+
+                <p>
+
+                    Showcase your crops with important details
+                    so buyers can discover your produce and
+                    make offers.
+
+                </p>
+
+
+
+                <!-- BENEFIT 1 -->
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Reach Buyers
+                        </h4>
+
+                        <p>
+                            Make your produce visible to
+                            registered buyers.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BENEFIT 2 -->
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+                        ₹
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Set Your Price
+                        </h4>
+
+                        <p>
+                            Publish your expected price
+                            per unit.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BENEFIT 3 -->
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+                        📷
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Add Crop Images
+                        </h4>
+
+                        <p>
+                            Upload a clear image to help
+                            buyers understand the quality
+                            of your produce.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BENEFIT 4 -->
+
+                <div class="benefit">
+
+                    <div class="benefit-icon">
+                        🤝
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Receive Offers
+                        </h4>
+
+                        <p>
+                            Buyers can submit offers for
+                            your listed crops.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SECURITY -->
+
+                <div class="secure-note">
+
+                    🔒 Your crop listing is associated
+                    with your AgriContract farmer account.
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             FORM CARD
+        ================================================== -->
+
+        <section class="form-card">
+
+
+            <div class="form-title">
+
+                <h2>
+                    Crop Information
+                </h2>
+
+                <span class="required-note">
+                    * Required fields
+                </span>
+
+            </div>
+
+
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                {% csrf_token %}
+
+
+                <div class="form-container">
+
+                    {{ form.as_p }}
+
+                </div>
+
+
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+
+                    🌱 &nbsp;
+                    Post Crop Listing
+
+                </button>
+
+            </form>
+
+
+
+            <div class="form-footer">
+
+                <span>
+
+                    Your listing will appear in
+                    the marketplace.
+
+                </span>
+
+
+                <a
+                    href="{% url 'home' %}"
+                    class="cancel-link"
+                >
+
+                    Cancel &nbsp;→
+
+                </a>
+
+            </div>
+
+
+        </section>
+
+    </div>
+
+</main>
+
+
+
+<!-- =====================================================
+     HELPFUL TIP
+====================================================== -->
+
+<section class="tips">
+
+    <div class="tips-box">
+
+
+        <div class="tips-icon">
+            💡
+        </div>
+
+
+        <div>
+
+            <h4>
+                Tip for a better listing
+            </h4>
+
+            <p>
+
+                Use accurate crop details and upload
+                a clear image. Complete information helps
+                buyers understand your produce before
+                making an offer.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</body>
+
+</html>
