@@ -9,7 +9,6 @@ media/
 staticfiles/
 
 *.h5
-*.keras
 
 .ipynb_checkpoints/
 

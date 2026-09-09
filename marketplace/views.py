@@ -14,8 +14,7 @@ from .models import Crop, Contract, Message
 from .forms import CropForm
 from .services import get_farmer_weather
 from .ml_predictor import predict_crop_price
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing import image
+from .plant_disease_service import predict_disease
 
 
 # ============================================================
@@ -296,160 +295,221 @@ def add_crop(request):
 # AI DISEASE DETECTOR
 # ============================================================
 
+# ============================================================
+# AI POTATO DISEASE DETECTOR
+# ============================================================
 def disease_detector(request):
+    """
+    Handle potato leaf image upload and disease prediction.
 
-    if (
-        request.method == "POST"
-        and request.FILES.get("crop_image")
-    ):
+    Returns:
+        GET  -> Disease detector page
+        POST -> JSON prediction result
+    """
 
-        try:
+    if request.method != "POST":
+        return render(request, "disease_detector.html")
 
-            # ------------------------------------------------
-            # Get uploaded image
-            # ------------------------------------------------
+    uploaded_file = request.FILES.get("crop_image")
 
-            uploaded_file = request.FILES[
-                "crop_image"
-            ]
+    # -------------------------------------------------
+    # 1. Validate uploaded image
+    # -------------------------------------------------
 
-            # ------------------------------------------------
-            # Save temporary image
-            # ------------------------------------------------
+    if not uploaded_file:
+        return JsonResponse(
+            {
+                "error": "Please upload a potato leaf image."
+            },
+            status=400
+        )
 
-            fs = FileSystemStorage()
+    allowed_types = {
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    }
 
-            filename = fs.save(
-                uploaded_file.name,
-                uploaded_file
+    if uploaded_file.content_type not in allowed_types:
+        return JsonResponse(
+            {
+                "error": (
+                    "Invalid image format. "
+                    "Please upload JPG, PNG, or WEBP."
+                )
+            },
+            status=400
+        )
+
+    # Maximum file size: 5 MB
+    max_file_size = 5 * 1024 * 1024
+
+    if uploaded_file.size > max_file_size:
+        return JsonResponse(
+            {
+                "error": (
+                    "Image is too large. "
+                    "Maximum allowed size is 5 MB."
+                )
+            },
+            status=400
+        )
+
+    file_path = None
+
+    try:
+        # -------------------------------------------------
+        # 2. Temporarily save uploaded image
+        # -------------------------------------------------
+
+        storage = FileSystemStorage()
+
+        filename = storage.save(
+            uploaded_file.name,
+            uploaded_file
+        )
+
+        file_path = storage.path(filename)
+
+        # -------------------------------------------------
+        # 3. Run AI prediction
+        # -------------------------------------------------
+
+        prediction = predict_disease(file_path)
+
+        disease = prediction["disease"]
+        confidence = float(prediction["confidence"])
+
+        # -------------------------------------------------
+        # 4. Generate disease-specific recommendation
+        # -------------------------------------------------
+
+        disease_info = {
+            "Early_blight": {
+                "status": "Warning",
+                "advice": (
+                    "Early Blight detected. Remove infected "
+                    "leaves and maintain good airflow around "
+                    "the plants. Avoid prolonged leaf moisture "
+                    "and monitor the crop regularly."
+                )
+            },
+
+            "Late_blight": {
+                "status": "Danger",
+                "advice": (
+                    "Late Blight detected. Remove severely "
+                    "infected plant material and isolate "
+                    "affected plants where possible. "
+                    "Consult an agricultural expert for "
+                    "appropriate disease-management treatment."
+                )
+            },
+
+            "Healthy": {
+                "status": "Healthy",
+                "advice": (
+                    "The potato leaf appears healthy. "
+                    "Continue regular crop monitoring, "
+                    "maintain proper irrigation and nutrition, "
+                    "and watch for new symptoms."
+                )
+            }
+        }
+
+        # -------------------------------------------------
+        # 5. Get information for predicted disease
+        # -------------------------------------------------
+
+        result_info = disease_info.get(
+            disease,
+            {
+                "status": "Unknown",
+                "advice": (
+                    "The model could not confidently "
+                    "identify this condition. Please upload "
+                    "a clear potato leaf image."
+                )
+            }
+        )
+
+        # -------------------------------------------------
+        # 6. Confidence threshold
+        # -------------------------------------------------
+
+        confidence_threshold = 60.0
+
+        if confidence < confidence_threshold:
+            status = "Low Confidence"
+
+            advice = (
+                "The AI is not sufficiently confident "
+                "about this prediction. Please upload a "
+                "clearer potato leaf image with the leaf "
+                "visible and well focused."
             )
 
-            path = fs.path(
-                filename
-            )
+        else:
+            status = result_info["status"]
+            advice = result_info["advice"]
 
+        # -------------------------------------------------
+        # 7. Return prediction to frontend
+        # -------------------------------------------------
+
+        return JsonResponse(
+            {
+                "success": True,
+                "disease": disease,
+                "confidence": f"{confidence:.2f}%",
+                "status": status,
+                "advice": advice
+            }
+        )
+
+    except FileNotFoundError:
+        return JsonResponse(
+            {
+                "error": (
+                    "AI model file was not found. "
+                    "Please check the trained model."
+                )
+            },
+            status=500
+        )
+
+    except Exception as e:
+        import traceback
+
+        traceback.print_exc()
+
+        return JsonResponse(
+            {
+                "error": (
+                    "Unable to analyze the image right now. "
+                    "Please try again."
+                ),
+                "details": str(e)
+            },
+            status=500
+        )
+
+    finally:
+        # -------------------------------------------------
+        # 8. Always remove temporary uploaded image
+        # -------------------------------------------------
+
+        if file_path and os.path.exists(file_path):
             try:
-
-                # --------------------------------------------
-                # Image preprocessing
-                # --------------------------------------------
-
-                img = image.load_img(
-                    path,
-                    target_size=(224, 224)
-                )
-
-                img_array = image.img_to_array(
-                    img
-                )
-
-                # Normalize pixels
-                img_array = (
-                    img_array / 255.0
-                )
-
-                # Add batch dimension
-                img_array = np.expand_dims(
-                    img_array,
-                    axis=0
-                )
-
-                # --------------------------------------------
-                # Load model only when needed
-                # --------------------------------------------
-
-                model = get_model()
-
-                # --------------------------------------------
-                # Prediction
-                # --------------------------------------------
-
-                prediction = model.predict(
-                    img_array,
-                    verbose=0
-                )
-
-                predicted_index = int(
-                    np.argmax(prediction)
-                )
-
-                predicted_class = classes[
-                    predicted_index
-                ]
-
-                confidence = round(
-                    float(
-                        np.max(prediction)
-                    ) * 100,
-                    2
-                )
-
-                # --------------------------------------------
-                # Advice
-                # --------------------------------------------
-
-                if predicted_class == "Early Blight":
-
-                    advice = (
-                        "Early Blight detected. "
-                        "Remove infected leaves and "
-                        "consult an agricultural expert "
-                        "for appropriate treatment."
-                    )
-
-                    status = "Warning"
-
-                elif predicted_class == "Late Blight":
-
-                    advice = (
-                        "Late Blight detected. "
-                        "Remove severely infected plants "
-                        "and consult an agricultural expert "
-                        "for appropriate treatment."
-                    )
-
-                    status = "Danger"
-
-                else:
-
-                    advice = (
-                        "The crop appears healthy. "
-                        "Continue regular monitoring."
-                    )
-
-                    status = "Healthy"
-
-                return JsonResponse(
-                    {
-                        "status": status,
-                        "disease": predicted_class,
-                        "confidence": f"{confidence}%",
-                        "advice": advice
-                    }
-                )
-
-            finally:
-
-                # Delete temporary uploaded image
-                if os.path.exists(path):
-
-                    os.remove(path)
-
-        except Exception as e:
-
-            return JsonResponse(
-                {
-                    "error": str(e)
-                },
-                status=500
-            )
-
-    return render(
-        request,
-        "disease_detector.html"
-    )
+                os.remove(file_path)
+            except OSError:
+                pass
+      
 
 
+        # ----------------------------------------------------
+        # AGRICULTURAL ADVICE
+        
 # ============================================================
 # FARMER / BUYER DASHBOARD
 # ============================================================
